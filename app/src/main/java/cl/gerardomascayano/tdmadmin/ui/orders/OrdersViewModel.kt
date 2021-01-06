@@ -1,13 +1,19 @@
 package cl.gerardomascayano.tdmadmin.ui.orders
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import cl.gerardomascayano.tdmadmin.domain.order.OrdersUseCase
+import kotlinx.coroutines.launch
 
-class OrdersViewModel : ViewModel() {
+class OrdersViewModel @ViewModelInject constructor(private val useCase: OrdersUseCase) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+
+
+
+    fun getOrders(){
+        viewModelScope.launch {
+            val state = useCase.getOrders()
+        }
     }
-    val text: LiveData<String> = _text
 }

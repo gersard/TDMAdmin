@@ -1,4 +1,4 @@
-package cl.gerardomascayano.tdmadmin.data
+package cl.gerardomascayano.tdmadmin.data.remote
 
 import com.google.gson.annotations.SerializedName
 
@@ -28,8 +28,7 @@ data class OrderResponse(
     @SerializedName("line_items")
     val products: List<Product>,
     @SerializedName("shipping_lines")
-    val shippingDetail: ShippingDetail
-
+    val shippingDetail: List<ShippingDetail>
 
 ) {
     data class Billing(
@@ -48,7 +47,9 @@ data class OrderResponse(
         @SerializedName("email")
         val email: String,
         @SerializedName("phone")
-        val phone: String
+        val phone: String,
+        @SerializedName("postcode")
+        val postcode: String
     )
 
     data class Shipping(
@@ -64,6 +65,8 @@ data class OrderResponse(
         val city: String,
         @SerializedName("state")
         val state: String,
+        @SerializedName("postcode")
+        val postcode: String
     )
 
     data class Product(

@@ -9,7 +9,9 @@ import androidx.fragment.app.Fragment
 import cl.gerardomascayano.tdmadmin.databinding.ActivityMainBinding
 import cl.gerardomascayano.tdmadmin.ui.orders.OrdersFragment
 import com.google.android.material.navigation.NavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var binding: ActivityMainBinding
