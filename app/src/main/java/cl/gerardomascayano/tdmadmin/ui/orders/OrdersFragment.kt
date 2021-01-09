@@ -17,6 +17,7 @@ import cl.gerardomascayano.tdmadmin.core.ui.MarginItemDecorator
 import cl.gerardomascayano.tdmadmin.databinding.FragmentOrdersBinding
 import cl.gerardomascayano.tdmadmin.domain.order.Order
 import cl.gerardomascayano.tdmadmin.ui.orders.adapter.OrdersAdapter
+import cl.gerardomascayano.tdmadmin.ui.orders.adapter.OrdersLoadAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -51,7 +52,10 @@ class OrdersFragment : Fragment(), OrdersAdapter.ClickListener {
         ordersAdapter.addLoadStateListener { state ->
             when (state.refresh) {
                 is LoadState.Loading -> viewBinding.srlOrders.isRefreshing = true
-                is LoadState.NotLoading -> viewBinding.srlOrders.isRefreshing = false
+                is LoadState.NotLoading -> {
+                    viewBinding.srlOrders.isRefreshing = false
+                    if (state.refresh.endOfPaginationReached && ordersAdapter.itemCount < 1) emptyOrders()
+                }
                 is LoadState.Error -> Toast.makeText(requireContext(), "ERROR ${(state.refresh as LoadState.Error).error.localizedMessage}", Toast.LENGTH_LONG)
                     .show()
             }
@@ -80,7 +84,7 @@ class OrdersFragment : Fragment(), OrdersAdapter.ClickListener {
             )
         )
         viewBinding.rvOrders.layoutManager = LinearLayoutManager(requireContext())
-        viewBinding.rvOrders.adapter = ordersAdapter
+        viewBinding.rvOrders.adapter = ordersAdapter.withLoadStateFooter(OrdersLoadAdapter())
     }
 
     private fun initAdapter() {
