@@ -10,8 +10,9 @@
 <!--    ORDER-->
     <dimen name="height_order_item">120dp</dimen>
     <dimen name="corner_radius_order_item">8dp</dimen>
+    <dimen name="corner_radius_state_order_item">8dp</dimen>
     <dimen name="elevation_order_item">8dp</dimen>
     <dimen name="margin_lateral_order_item">8dp</dimen>
     <dimen name="margin_vertical_order_item">8dp</dimen>
-    <dimen name="square_size_btn_detail_order_item">40dp</dimen>
+    <dimen name="square_size_btn_detail_order_item">30dp</dimen>
 </resources>

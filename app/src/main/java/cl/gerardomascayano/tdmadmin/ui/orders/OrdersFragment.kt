@@ -8,27 +8,21 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
-import androidx.paging.LoadType
 import androidx.recyclerview.widget.LinearLayoutManager
 import cl.gerardomascayano.tdmadmin.R
-import cl.gerardomascayano.tdmadmin.core.extension.exhaustive
 import cl.gerardomascayano.tdmadmin.core.extension.invisible
 import cl.gerardomascayano.tdmadmin.core.extension.visible
 import cl.gerardomascayano.tdmadmin.core.ui.MarginItemDecorator
 import cl.gerardomascayano.tdmadmin.databinding.FragmentOrdersBinding
+import cl.gerardomascayano.tdmadmin.domain.order.Order
 import cl.gerardomascayano.tdmadmin.ui.orders.adapter.OrdersAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 @AndroidEntryPoint
-class OrdersFragment : Fragment() {
+class OrdersFragment : Fragment(), OrdersAdapter.ClickListener {
 
     private val ordersViewModel = viewModels<OrdersViewModel>()
     private var _viewBinding: FragmentOrdersBinding? = null
@@ -90,11 +84,15 @@ class OrdersFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        ordersAdapter = OrdersAdapter()
+        ordersAdapter = OrdersAdapter(this)
     }
 
     companion object {
         fun newInstance() = OrdersFragment()
+    }
+
+    override fun onOrderClickListener(order: Order) {
+        Toast.makeText(requireContext(), order.billing.lastName, Toast.LENGTH_LONG).show()
     }
 
 }

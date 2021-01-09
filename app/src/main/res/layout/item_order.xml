@@ -55,13 +55,14 @@
             android:id="@+id/tv_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/order_state_corner_radius"
             android:padding="8dp"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:background="@color/purple_200"
+            tools:backgroundTint="@color/purple_200"
             tools:text="Procesando" />
 
         <ImageButton
@@ -69,9 +70,12 @@
             android:layout_width="@dimen/square_size_btn_detail_order_item"
             android:layout_height="@dimen/square_size_btn_detail_order_item"
             android:background="@color/transparent"
+            android:padding="4dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toTopOf="@+id/tv_status"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="?attr/homeAsUpIndicator"
+            app:srcCompat="@drawable/ic_arrow_right"
             tools:ignore="ContentDescription" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

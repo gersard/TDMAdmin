@@ -9,4 +9,17 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="transparent">#00000000</color>
+
+
+    <!--    STATUS ORDER-->
+    <color name="order_status_pending">#E65100</color>
+    <color name="order_status_processing">#0D47A1</color>
+    <color name="order_status_completed">#018505</color>
+    <color name="order_status_onhold">#A9AF00</color>
+    <color name="order_status_canceled">#C80000</color>
+    <color name="order_status_refunded">#079F7B</color>
+    <color name="order_status_failed">#606060</color>
+    <color name="order_status_deleted">#000000</color>
+
+
 </resources>

@@ -1,18 +1,21 @@
 package cl.gerardomascayano.tdmadmin.domain.order
 
+import androidx.annotation.ColorRes
+import cl.gerardomascayano.tdmadmin.R
+
 enum class OrderStatus(
     private val id: String,
     val description: String,
-    val color: String
+    @ColorRes val color: Int
 ) {
-    PENDING("pending", "Pendiente de pago", "#E65100"),
-    PROCESSING("processing", "Procesando", "#0D47A1"),
-    COMPLETED("completed", "Completado", "#000000"),
-    ON_HOLD("on-hold", "En espera", "#4A148C"),
-    CANCELLED("cancelled", "Cancelado", "#827717"),
-    REEMBOLSADO("refunded", "Reembolsado", "#212121"),
-    FALLIDO("failed", "Fallido", "#3E2723"),
-    ELIMINADO("trash", "Eliminado", "#B71C1C");
+    PENDING("pending", "Pendiente de pago", R.color.order_status_pending),
+    PROCESSING("processing", "Procesando", R.color.order_status_processing),
+    COMPLETED("completed", "Completado", R.color.order_status_completed),
+    ON_HOLD("on-hold", "En espera", R.color.order_status_onhold),
+    CANCELLED("cancelled", "Cancelado", R.color.order_status_canceled),
+    REFUNDED("refunded", "Reembolsado", R.color.order_status_refunded),
+    FAILED("failed", "Fallido", R.color.order_status_failed),
+    DELETED("trash", "Eliminado", R.color.order_status_deleted);
 
     companion object {
         fun from(id: String) = values().first { it.id == id }
