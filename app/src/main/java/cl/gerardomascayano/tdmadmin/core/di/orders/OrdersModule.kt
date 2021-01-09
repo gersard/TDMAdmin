@@ -1,7 +1,6 @@
 package cl.gerardomascayano.tdmadmin.core.di.orders
 
 import cl.gerardomascayano.tdmadmin.data.remote.OrdersDataSource
-import cl.gerardomascayano.tdmadmin.data.remote.OrdersDataSourceImpl
 import cl.gerardomascayano.tdmadmin.data.repository.OrdersRepository
 import cl.gerardomascayano.tdmadmin.data.repository.OrdersRepositoryImpl
 import cl.gerardomascayano.tdmadmin.domain.order.OrdersUseCase
@@ -20,9 +19,5 @@ abstract class OrdersModule {
 
     @Binds
     abstract fun bindsRepository(repoImpl: OrdersRepositoryImpl): OrdersRepository
-
-    @Binds
-    abstract fun bindsRemoteDataSource(dataSourceImpl: OrdersDataSourceImpl): OrdersDataSource
-
 
 }

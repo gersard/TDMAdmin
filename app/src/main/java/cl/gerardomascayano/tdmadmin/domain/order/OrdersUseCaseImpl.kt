@@ -1,20 +1,13 @@
 package cl.gerardomascayano.tdmadmin.domain.order
 
-import cl.gerardomascayano.tdmadmin.R
+import androidx.paging.PagingData
 import cl.gerardomascayano.tdmadmin.data.repository.OrdersRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class OrdersUseCaseImpl @Inject constructor(private val repo: OrdersRepository) : OrdersUseCase {
 
-    override suspend fun getOrders(): OrderState {
-        repo.getOrders()?.let {
-            if (it.isNotEmpty()) {
-                return OrderState.Success(it)
-            } else {
-                return OrderState.Empty
-            }
-        } ?: kotlin.run {
-            return OrderState.Failure(R.string.app_name)
-        }
+    override fun getOrders(): Flow<PagingData<Order>> {
+        return repo.getOrders()
     }
 }

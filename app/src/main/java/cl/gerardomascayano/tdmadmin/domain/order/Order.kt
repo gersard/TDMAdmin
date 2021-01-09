@@ -1,6 +1,6 @@
 package cl.gerardomascayano.tdmadmin.domain.order
 
-import java.time.LocalDate
+import cl.gerardomascayano.tdmadmin.core.diffutil.DiffUtilComparator
 import java.time.LocalDateTime
 
 
@@ -18,7 +18,15 @@ data class Order(
     val paymentMethod: String,
     val paymentMethodTitle: String,
     val products: List<Product>,
-) {
+): DiffUtilComparator {
+
+    override fun getIdentifier(): Int {
+        return id
+    }
+
+    override fun getContent(): String {
+        return toString()
+    }
 
     data class Shipping(
         val firstName: String,
@@ -50,4 +58,5 @@ data class Order(
         val sku: String,
         val price: Int
     )
+
 }

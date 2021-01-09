@@ -1,6 +1,5 @@
-package cl.gerardomascayano.tdmadmin.data.repository
+package cl.gerardomascayano.tdmadmin.data.remote
 
-import cl.gerardomascayano.tdmadmin.data.remote.OrderResponse
 import cl.gerardomascayano.tdmadmin.domain.order.Order
 import cl.gerardomascayano.tdmadmin.domain.order.OrderStatus
 import java.time.LocalDateTime
@@ -11,7 +10,7 @@ class OrderWrapper {
     fun ordersResponseToOrder(ordersResponse: List<OrderResponse>): List<Order> =
         ordersResponse.map { orderResponseToOrder(it) }
 
-    private fun orderResponseToOrder(orderResponse: OrderResponse): Order {
+    fun orderResponseToOrder(orderResponse: OrderResponse): Order {
         return Order(
             orderResponse.id,
             OrderStatus.from(orderResponse.status),

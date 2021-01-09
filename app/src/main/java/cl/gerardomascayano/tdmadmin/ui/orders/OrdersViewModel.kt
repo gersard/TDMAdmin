@@ -3,25 +3,19 @@ package cl.gerardomascayano.tdmadmin.ui.orders
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import cl.gerardomascayano.tdmadmin.domain.order.OrderState
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import cl.gerardomascayano.tdmadmin.domain.order.Order
 import cl.gerardomascayano.tdmadmin.domain.order.OrdersUseCase
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class OrdersViewModel @ViewModelInject constructor(private val useCase: OrdersUseCase) : ViewModel() {
 
-    private val _ordersState = MutableStateFlow<OrderState>(OrderState.Empty)
-    val orderState: StateFlow<OrderState>
-        get() = _ordersState
-
-
-    fun getOrders() {
-        viewModelScope.launch {
-            _ordersState.value = OrderState.Loading(true)
-            val resultState = useCase.getOrders()
-            _ordersState.value = OrderState.Loading(false)
-            _ordersState.value = resultState
-        }
+    fun fetchOrders(): Flow<PagingData<Order>> {
+        return useCase.getOrders()
+            .cachedIn(viewModelScope)
     }
+
 }

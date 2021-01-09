@@ -1,9 +1,30 @@
 package cl.gerardomascayano.tdmadmin.data.remote
 
+import androidx.paging.PagingSource
+import cl.gerardomascayano.tdmadmin.domain.order.Order
+import retrofit2.HttpException
 import retrofit2.Response
+import timber.log.Timber
+import java.io.IOException
+import javax.inject.Inject
 
-interface OrdersDataSource {
+class OrdersDataSource @Inject constructor(
+    private val ordersService: OrdersService
+) : PagingSource<Int, OrderResponse>() {
 
-    suspend fun getOrders(): Response<List<OrderResponse>>?
-
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, OrderResponse> {
+        val page = params.key ?: 1
+        val response = ordersService.getOrders(page)
+        return try {
+            LoadResult.Page(
+                response.body()!!,
+                if (page == 1) null else page - 1,
+                if (response.body()!!.isEmpty()) null else page + 1
+            )
+        } catch (exception: IOException) {
+            LoadResult.Error(exception)
+        } catch (exception: HttpException) {
+            LoadResult.Error(exception)
+        }
+    }
 }

@@ -4,33 +4,23 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import cl.gerardomascayano.tdmadmin.R
+import cl.gerardomascayano.tdmadmin.core.diffutil.DiffCallback
 import cl.gerardomascayano.tdmadmin.core.extension.format
 import cl.gerardomascayano.tdmadmin.databinding.ItemOrderBinding
 import cl.gerardomascayano.tdmadmin.domain.order.Order
 import cl.gerardomascayano.tdmadmin.domain.order.OrderDateUtil
 
-class OrdersAdapter() : RecyclerView.Adapter<OrdersAdapter.OrderViewHolder>() {
-
-    private val orders = mutableListOf<Order>()
+class OrdersAdapter : PagingDataAdapter<Order, OrdersAdapter.OrderViewHolder>(DiffCallback<Order>().itemCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = OrderViewHolder(
         ItemOrderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )
 
     override fun onBindViewHolder(holder: OrderViewHolder, position: Int) {
-        holder.setOrder(orders[position])
-    }
-
-    override fun getItemCount(): Int = orders.size
-
-    fun addOrders(newOrders: List<Order>) {
-        if (newOrders.isNotEmpty()) {
-            val currentSize = this.orders.size
-            this.orders.addAll(newOrders)
-            notifyItemRangeInserted(currentSize, currentSize + newOrders.size - 1)
-        }
+        holder.setOrder(getItem(position)!!)
     }
 
     inner class OrderViewHolder(private val viewBinding: ItemOrderBinding) : RecyclerView.ViewHolder(viewBinding.root), View.OnClickListener {

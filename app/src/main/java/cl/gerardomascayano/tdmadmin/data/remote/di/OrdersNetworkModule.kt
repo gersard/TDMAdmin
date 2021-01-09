@@ -1,7 +1,8 @@
 package cl.gerardomascayano.tdmadmin.data.remote.di
 
 import cl.gerardomascayano.tdmadmin.data.remote.OrdersService
-import cl.gerardomascayano.tdmadmin.data.repository.OrderWrapper
+import cl.gerardomascayano.tdmadmin.data.remote.OrderWrapper
+import cl.gerardomascayano.tdmadmin.data.remote.OrdersDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,4 +19,7 @@ object OrdersNetworkModule {
 
     @Provides
     fun providesOrderWrapper(): OrderWrapper = OrderWrapper()
+
+    @Provides
+    fun providesOrderDataSource(orderService: OrdersService) = OrdersDataSource(orderService)
 }
