@@ -16,7 +16,7 @@ class OrderWrapper {
             orderResponse.id,
             OrderStatus.from(orderResponse.status),
             LocalDateTime.parse(orderResponse.dateCreated, DateTimeFormatter.ISO_DATE_TIME),
-            LocalDateTime.parse(orderResponse.datePaid, DateTimeFormatter.ISO_DATE_TIME),
+            if (orderResponse.datePaid != null) LocalDateTime.parse(orderResponse.datePaid, DateTimeFormatter.ISO_DATE_TIME) else null,
             orderResponse.total,
             orderResponse.customerId,
             orderResponse.customerNote,

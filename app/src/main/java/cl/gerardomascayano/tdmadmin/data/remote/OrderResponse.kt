@@ -24,7 +24,7 @@ data class OrderResponse(
     @SerializedName("payment_method_title")
     val paymentMethodTitle: String,
     @SerializedName("date_paid")
-    val datePaid: String,
+    val datePaid: String?,
     @SerializedName("line_items")
     val products: List<Product>,
     @SerializedName("shipping_lines")

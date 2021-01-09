@@ -5,9 +5,13 @@
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+
+<!--    ORDER-->
     <dimen name="height_order_item">120dp</dimen>
     <dimen name="corner_radius_order_item">8dp</dimen>
     <dimen name="elevation_order_item">8dp</dimen>
-    <dimen name="margin_lateral_order_item">16dp</dimen>
+    <dimen name="margin_lateral_order_item">8dp</dimen>
+    <dimen name="margin_vertical_order_item">8dp</dimen>
     <dimen name="square_size_btn_detail_order_item">40dp</dimen>
 </resources>

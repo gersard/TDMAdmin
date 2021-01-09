@@ -8,7 +8,7 @@ data class Order(
     val id: Int,
     val status: OrderStatus,
     val dateCreated: LocalDateTime,
-    val datePaid: LocalDateTime,
+    val datePaid: LocalDateTime?,
     val total: Int,
     //TODO Ver si es necesario obtener el customer entero o solo se usan datos de billing
     val customerId: Int,

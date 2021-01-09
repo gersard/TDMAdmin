@@ -23,11 +23,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setSupportActionBar(binding.appBarMainInclude.toolbar)
         binding.navView.setNavigationItemSelectedListener(this)
         setupNavDrawer()
-        defaultScreen()
-    }
-
-    private fun defaultScreen() {
-        displayFragment(R.id.menu_orders)
     }
 
     private fun setupNavDrawer() {

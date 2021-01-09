@@ -6,15 +6,15 @@ import javax.inject.Inject
 
 class OrdersUseCaseImpl @Inject constructor(private val repo: OrdersRepository) : OrdersUseCase {
 
-    override suspend fun getOrders(): OrdersState {
+    override suspend fun getOrders(): OrderState {
         repo.getOrders()?.let {
             if (it.isNotEmpty()) {
-                return OrdersState.Success(it)
+                return OrderState.Success(it)
             } else {
-                return OrdersState.Empty()
+                return OrderState.Empty
             }
         } ?: kotlin.run {
-            return OrdersState.Failure(R.string.app_name)
+            return OrderState.Failure(R.string.app_name)
         }
     }
 }
