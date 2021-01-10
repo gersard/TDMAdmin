@@ -1,9 +1,11 @@
 package cl.gerardomascayano.tdmadmin.domain.order
 
+import android.os.Parcelable
 import cl.gerardomascayano.tdmadmin.core.diffutil.DiffUtilComparator
+import kotlinx.parcelize.Parcelize
 import java.time.LocalDateTime
 
-
+@Parcelize
 data class Order(
     val id: Int,
     val status: OrderStatus,
@@ -18,7 +20,7 @@ data class Order(
     val paymentMethod: String,
     val paymentMethodTitle: String,
     val products: List<Product>,
-): DiffUtilComparator {
+) : DiffUtilComparator, Parcelable {
 
     override fun getIdentifier(): Int {
         return id
@@ -28,6 +30,7 @@ data class Order(
         return toString()
     }
 
+    @Parcelize
     data class Shipping(
         val firstName: String,
         val lastName: String,
@@ -36,8 +39,9 @@ data class Order(
         val city: String,
         val region: String,
         val postCode: String
-    )
+    ) : Parcelable
 
+    @Parcelize
     data class Billing(
         val firstName: String,
         val lastName: String,
@@ -48,8 +52,9 @@ data class Order(
         val postCode: String,
         val email: String,
         val phone: String
-    )
+    ) : Parcelable
 
+    @Parcelize
     data class Product(
         val id: Int,
         val name: String,
@@ -57,6 +62,6 @@ data class Order(
         val quantity: Int,
         val sku: String,
         val price: Int
-    )
+    ) : Parcelable
 
 }

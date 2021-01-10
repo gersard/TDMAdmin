@@ -91,12 +91,12 @@ class OrdersFragment : Fragment(), OrdersAdapter.ClickListener {
         ordersAdapter = OrdersAdapter(this)
     }
 
-    companion object {
-        fun newInstance() = OrdersFragment()
-    }
 
     override fun onOrderClickListener(order: Order) {
         Toast.makeText(requireContext(), order.billing.lastName, Toast.LENGTH_LONG).show()
     }
 
+    companion object {
+        fun newInstance() = OrdersFragment()
+    }
 }
