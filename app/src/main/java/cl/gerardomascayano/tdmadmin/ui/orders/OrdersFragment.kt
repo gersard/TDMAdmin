@@ -18,6 +18,7 @@ import cl.gerardomascayano.tdmadmin.databinding.FragmentOrdersBinding
 import cl.gerardomascayano.tdmadmin.domain.order.Order
 import cl.gerardomascayano.tdmadmin.ui.orders.adapter.OrdersAdapter
 import cl.gerardomascayano.tdmadmin.ui.orders.adapter.OrdersLoadAdapter
+import cl.gerardomascayano.tdmadmin.ui.orders.detail.DetailOrderFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -93,7 +94,10 @@ class OrdersFragment : Fragment(), OrdersAdapter.ClickListener {
 
 
     override fun onOrderClickListener(order: Order) {
-        Toast.makeText(requireContext(), order.billing.lastName, Toast.LENGTH_LONG).show()
+        activity?.supportFragmentManager
+            ?.beginTransaction()
+            ?.replace(R.id.host_fragment, DetailOrderFragment.newInstance(order))
+            ?.addToBackStack(null)?.commit()
     }
 
     companion object {
