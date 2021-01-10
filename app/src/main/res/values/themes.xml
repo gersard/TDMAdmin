@@ -22,4 +22,17 @@
     <style name="Theme.TDMAdmin.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.TDMAdmin.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="TvTitleSectionDetailOrder" parent="Theme.TDMAdmin">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">@dimen/order_detail_margin_top_title</item>
+    </style>
+
+    <style name="TvContentSectionDetailOrder" parent="Theme.TDMAdmin">
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_marginTop">@dimen/order_detail_margin_top_content</item>
+
+    </style>
+
 </resources>

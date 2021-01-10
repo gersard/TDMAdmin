@@ -15,4 +15,10 @@
     <dimen name="margin_lateral_order_item">8dp</dimen>
     <dimen name="margin_vertical_order_item">8dp</dimen>
     <dimen name="square_size_btn_detail_order_item">30dp</dimen>
+
+<!--    DETAIL ORDER-->
+    <dimen name="order_detail_margin_top_title">24dp</dimen>
+    <dimen name="order_detail_margin_bottom_title">16dp</dimen>
+    <dimen name="order_detail_margin_top_content">4dp</dimen>
+
 </resources>
