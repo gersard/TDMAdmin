@@ -14,6 +14,7 @@ data class Order(
     val total: Int,
     //TODO Ver si es necesario obtener el customer entero o solo se usan datos de billing
     val customerId: Int,
+    val rut: String,
     val note: String,
     val billing: Billing,
     val shipping: Shipping,
@@ -32,6 +33,7 @@ data class Order(
 
     @Parcelize
     data class Shipping(
+        val methodName: String,
         val firstName: String,
         val lastName: String,
         val address1: String,

@@ -13,9 +13,19 @@ import timber.log.Timber
 
 class OrdersViewModel @ViewModelInject constructor(private val useCase: OrdersUseCase) : ViewModel() {
 
+    var orders: Flow<PagingData<Order>>? = null
+
     fun fetchOrders(): Flow<PagingData<Order>> {
-        return useCase.getOrders()
-            .cachedIn(viewModelScope)
+        if (orders == null) {
+            orders = useCase.getOrders()
+                .cachedIn(viewModelScope)
+        }
+
+        return orders!!
+    }
+
+    fun clearOrders() {
+        orders = null
     }
 
 }

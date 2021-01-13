@@ -7,6 +7,11 @@
     tools:context=".ui.orders.detail.DetailOrderFragment">
 
     <androidx.cardview.widget.CardView
+        app:cardCornerRadius="6dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:cardElevation="6dp"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -19,17 +24,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="20 de Enero, 2021" />
 
             <TextView
-                android:id="@+id/tv_state"
+                android:id="@+id/tv_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/order_detail_state_corner_radius"
                 android:padding="4dp"
+                android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -87,16 +94,17 @@
                 style="@style/TvTitleSectionDetailOrder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/title_header_datos_envio"
                 app:layout_constraintStart_toStartOf="@+id/tv_customer_phone"
-                app:layout_constraintTop_toBottomOf="@+id/tv_customer_phone"
-                android:text="@string/title_header_datos_envio" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_customer_phone" />
 
             <TextView
                 android:id="@+id/tv_address"
                 style="@style/TvContentSectionDetailOrder"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/order_detail_margin_bottom_title"
+
+                android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/textView8"
@@ -108,8 +116,10 @@
                 style="@style/TvContentSectionDetailOrder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@+id/tv_address"
+                app:layout_constraintEnd_toEndOf="parent"
 
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/tv_address"
                 app:layout_constraintTop_toBottomOf="@+id/tv_address"
                 tools:text="Dirección L1: direccion 1" />
 
@@ -118,6 +128,8 @@
                 style="@style/TvContentSectionDetailOrder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/tv_address_1"
                 app:layout_constraintTop_toBottomOf="@+id/tv_address_1"
                 tools:text="Dirección L2: direccion 2" />
@@ -128,6 +140,8 @@
                 android:layout_width="wrap_content"
 
                 android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/tv_address_2"
                 app:layout_constraintTop_toBottomOf="@+id/tv_address_2"
                 tools:text="Comuna: Puente Alto" />
@@ -139,6 +153,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/tv_comuna"
                 app:layout_constraintTop_toBottomOf="@+id/tv_comuna"
                 tools:text="Ciudad: Santiago" />
@@ -146,8 +162,11 @@
             <TextView
                 android:id="@+id/tv_method_shipping"
                 style="@style/TvContentSectionDetailOrder"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/tv_city"
                 app:layout_constraintTop_toBottomOf="@+id/tv_city"
                 tools:text="Metodo de envío: Chilexpress" />
@@ -155,9 +174,12 @@
             <TextView
                 android:id="@+id/tv_method_payment"
                 style="@style/TvContentSectionDetailOrder"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
 
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/tv_method_shipping"
                 app:layout_constraintTop_toBottomOf="@+id/tv_method_shipping"
                 tools:text="Metodo de pago: Flow WebPay" />
@@ -165,8 +187,11 @@
             <TextView
                 android:id="@+id/tv_note"
                 style="@style/TvContentSectionDetailOrder"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/tv_method_payment"
                 app:layout_constraintTop_toBottomOf="@+id/tv_method_payment"
                 tools:text="Nota: \nPor favor embalar el producto con doble seguridad" />
@@ -176,9 +201,9 @@
                 style="@style/TvTitleSectionDetailOrder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/title_header_productos"
                 app:layout_constraintStart_toStartOf="@+id/tv_note"
-                app:layout_constraintTop_toBottomOf="@+id/tv_note"
-                android:text="@string/title_header_productos" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_note" />
 
             <TextView
                 android:id="@+id/tv_total"

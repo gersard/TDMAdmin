@@ -47,6 +47,10 @@ class OrdersFragment : Fragment(), OrdersAdapter.ClickListener {
         configureRv()
         listeningOrdersState()
         fetchOrders()
+        viewBinding.srlOrders.setOnRefreshListener {
+            ordersViewModel.value.clearOrders()
+            fetchOrders()
+        }
     }
 
     private fun listeningOrdersState() {

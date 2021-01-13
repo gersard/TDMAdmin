@@ -28,7 +28,9 @@ data class OrderResponse(
     @SerializedName("line_items")
     val products: List<Product>,
     @SerializedName("shipping_lines")
-    val shippingDetail: List<ShippingDetail>
+    val shippingDetail: List<ShippingDetail>,
+    @SerializedName("meta_data")
+    val metaData: List<MetaData>
 
 ) {
     data class Billing(
@@ -89,6 +91,15 @@ data class OrderResponse(
         val methodTitle: String,
         @SerializedName("total")
         val total: Int
+    )
+
+    data class MetaData(
+        @SerializedName("id")
+        val id: Int,
+        @SerializedName("key")
+        val key: String,
+        @SerializedName("value")
+        val value: String
     )
 }
 
