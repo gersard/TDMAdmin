@@ -3,7 +3,7 @@ package cl.gerardomascayano.tdmadmin.domain.order
 import androidx.annotation.ColorRes
 import cl.gerardomascayano.tdmadmin.R
 
-enum class OrderStatus(
+enum class OrderState(
     private val id: String,
     val description: String,
     @ColorRes val color: Int

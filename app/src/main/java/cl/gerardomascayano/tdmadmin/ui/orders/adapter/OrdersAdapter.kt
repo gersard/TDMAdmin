@@ -1,7 +1,6 @@
 package cl.gerardomascayano.tdmadmin.ui.orders.adapter
 
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,8 +39,8 @@ class OrdersAdapter(val clickListener: ClickListener) : PagingDataAdapter<Order,
                 viewBinding.tvOrderId.text = getString(R.string.order_id, order.id)
                 viewBinding.tvCustomerName.text = getString(R.string.order_customer_name, order.billing.firstName, order.billing.lastName)
                 viewBinding.tvDateCreatedOrder.text = order.dateCreated.format(OrderDateUtil.PATTERN_ORDER_DATE_CREATED_LIST)
-                viewBinding.tvStatus.text = order.status.description
-                viewBinding.tvStatus.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, order.status.color))
+                viewBinding.tvStatus.text = order.state.description
+                viewBinding.tvStatus.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, order.state.color))
             }
 
         }
@@ -53,3 +52,51 @@ class OrdersAdapter(val clickListener: ClickListener) : PagingDataAdapter<Order,
     }
 
 }
+
+
+/**
+ * DateState
+ *  - DateCreated
+ *  - Status
+ *
+ * HeaderText
+ *  - Title
+ *  - Campos (key, value)
+ *
+ * HeaderProducts
+ *  - Title
+ *  - Productos
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

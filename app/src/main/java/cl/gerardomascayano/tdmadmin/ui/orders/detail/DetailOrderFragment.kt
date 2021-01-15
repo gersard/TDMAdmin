@@ -63,8 +63,8 @@ class DetailOrderFragment : Fragment(), ActivityFragmentContract {
             // ORDER
             (requireActivity() as MainActivity).updateTitle("Pedido: #$id")
             viewBinding.tvDateCreated.text = dateCreated.format(OrderDateUtil.PATTERN_ORDER_DATE_CREATED_LIST)
-            viewBinding.tvStatus.text = status.description
-            viewBinding.tvStatus.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), status.color))
+            viewBinding.tvStatus.text = state.description
+            viewBinding.tvStatus.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), state.color))
             viewBinding.tvTotal.text = getString(R.string.order_total_with_title, total)
 
             // USER

@@ -1,7 +1,7 @@
 package cl.gerardomascayano.tdmadmin.data.remote
 
 import cl.gerardomascayano.tdmadmin.domain.order.Order
-import cl.gerardomascayano.tdmadmin.domain.order.OrderStatus
+import cl.gerardomascayano.tdmadmin.domain.order.OrderState
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -13,7 +13,7 @@ class OrderWrapper {
     fun orderResponseToOrder(orderResponse: OrderResponse): Order {
         return Order(
             orderResponse.id,
-            OrderStatus.from(orderResponse.status),
+            OrderState.from(orderResponse.status),
             LocalDateTime.parse(orderResponse.dateCreated, DateTimeFormatter.ISO_DATE_TIME),
             if (orderResponse.datePaid != null) LocalDateTime.parse(orderResponse.datePaid, DateTimeFormatter.ISO_DATE_TIME) else null,
             orderResponse.total,

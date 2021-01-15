@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 @Parcelize
 data class Order(
     val id: Int,
-    val status: OrderStatus,
+    val state: OrderState,
     val dateCreated: LocalDateTime,
     val datePaid: LocalDateTime?,
     val total: Int,
@@ -56,14 +56,6 @@ data class Order(
         val phone: String
     ) : Parcelable
 
-    @Parcelize
-    data class Product(
-        val id: Int,
-        val name: String,
-        val productId: Int,
-        val quantity: Int,
-        val sku: String,
-        val price: Int
-    ) : Parcelable
+
 
 }
