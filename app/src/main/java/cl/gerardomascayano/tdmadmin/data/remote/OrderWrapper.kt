@@ -2,6 +2,7 @@ package cl.gerardomascayano.tdmadmin.data.remote
 
 import cl.gerardomascayano.tdmadmin.domain.order.Order
 import cl.gerardomascayano.tdmadmin.domain.order.OrderState
+import cl.gerardomascayano.tdmadmin.domain.order.Product
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -55,11 +56,11 @@ class OrderWrapper {
         )
     }
 
-    private fun productsResponseToProducts(productsResponse: List<OrderResponse.Product>): List<Order.Product> =
+    private fun productsResponseToProducts(productsResponse: List<OrderResponse.Product>): List<Product> =
         productsResponse.map { productResponseToProduct(it) }
 
-    private fun productResponseToProduct(productResponse: OrderResponse.Product): Order.Product {
-        return Order.Product(
+    private fun productResponseToProduct(productResponse: OrderResponse.Product): Product {
+        return Product(
             productResponse.id,
             productResponse.name,
             productResponse.id,
