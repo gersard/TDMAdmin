@@ -10,6 +10,7 @@
 
     <color name="transparent">#00000000</color>
 
+    <color name="divider_gray">#737373</color>
 
     <!--    STATUS ORDER-->
     <color name="order_status_pending">#E65100</color>

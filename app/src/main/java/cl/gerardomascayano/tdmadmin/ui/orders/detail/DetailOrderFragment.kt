@@ -1,24 +1,28 @@
 package cl.gerardomascayano.tdmadmin.ui.orders.detail
 
 import android.content.res.ColorStateList
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.text.format.DateUtils
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import cl.gerardomascayano.tdmadmin.MainActivity
 import cl.gerardomascayano.tdmadmin.R
 import cl.gerardomascayano.tdmadmin.core.extension.format
+import cl.gerardomascayano.tdmadmin.core.ui.ActivityFragmentContract
+import cl.gerardomascayano.tdmadmin.core.ui.IconTypeActivity
+import cl.gerardomascayano.tdmadmin.core.ui.MarginItemDecorator
 import cl.gerardomascayano.tdmadmin.databinding.DetailOrderFragmentBinding
 import cl.gerardomascayano.tdmadmin.domain.order.Order
 import cl.gerardomascayano.tdmadmin.domain.order.OrderDateUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DetailOrderFragment : Fragment() {
+class DetailOrderFragment : Fragment(), ActivityFragmentContract {
 
     private val viewModel = viewModels<DetailOrderViewModel>()
     private var _viewBinding: DetailOrderFragmentBinding? = null
@@ -37,13 +41,27 @@ class DetailOrderFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        configureRv()
         setOrderData()
+    }
+
+    private fun configureRv() {
+        viewBinding.rvProducts.layoutManager = LinearLayoutManager(requireContext())
+        viewBinding.rvProducts.addItemDecoration(
+            MarginItemDecorator(
+                resources.getDimension(R.dimen.margin_vertical_detail_product).toInt(),
+                resources.getDimension(R.dimen.margin_lateral_detail_product).toInt()
+            )
+        )
+        viewBinding.rvProducts.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+
     }
 
     private fun setOrderData() {
         with(viewModel.value.order) {
 
             // ORDER
+            (requireActivity() as MainActivity).updateTitle("Pedido: #$id")
             viewBinding.tvDateCreated.text = dateCreated.format(OrderDateUtil.PATTERN_ORDER_DATE_CREATED_LIST)
             viewBinding.tvStatus.text = status.description
             viewBinding.tvStatus.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), status.color))
@@ -65,6 +83,9 @@ class DetailOrderFragment : Fragment() {
 
             // PAYMENT
             viewBinding.tvMethodPayment.text = getString(R.string.order_payment_method_with_title, paymentMethodTitle)
+
+            // PRODUCTS
+            viewBinding.rvProducts.adapter = ProductsDetailAdapter(products)
         }
     }
 
@@ -78,5 +99,7 @@ class DetailOrderFragment : Fragment() {
             }
         }
     }
+
+    override fun iconLeftToShow(): IconTypeActivity = IconTypeActivity.ARROW_BACK
 
 }

@@ -12,14 +12,14 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_orders">Ordenes</string>
 
-<!--    ORDER LIST-->
+    <!--    ORDER LIST-->
     <string name="order_id">Pedido: #%1$d </string>
     <string name="order_customer_name">%1$s %2$s</string>
     <string name="title_header_datos_cliente">Datos Cliente</string>
     <string name="title_header_datos_envio">Datos de Envío</string>
     <string name="title_header_productos">Productos</string>
 
-<!--    ORDER DETAIL-->
+    <!--    ORDER DETAIL-->
     <string name="order_customer_name_with_title">Nombre: %1$s %2$s</string>
     <string name="order_customer_rut_with_title">Rut: %1$s</string>
     <string name="order_customer_phone_with_title">Teléfono: %1$s</string>
@@ -32,4 +32,17 @@
     <string name="order_payment_method_with_title">Método de Pago: %1$s</string>
     <string name="order_shipping_note_with_title">Nota: \n%1$s</string>
     <string name="order_total_with_title">Total pedido: $%1$d</string>
+
+    <!--    PRODUCT DETAIL-->
+    <string name="product_detail_description">Descripción: %1$s</string>
+    <string name="product_detail_sku">SKU: %1$s</string>
+    <string name="product_detail_quantity">Cantidad: %1$d</string>
+    <string name="product_detail_unit_price">Precio unitario: $%1$d</string>
+
+
+    <!--    FCM-->
+    <string name="fcm_topic_order">new_order</string>
+    <string name="default_notification_channel_id">ordenes</string>
+
+
 </resources>

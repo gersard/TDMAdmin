@@ -6,6 +6,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import cl.gerardomascayano.tdmadmin.core.ui.ActivityFragmentContract
+import cl.gerardomascayano.tdmadmin.core.ui.IconTypeActivity
 import cl.gerardomascayano.tdmadmin.databinding.ActivityMainBinding
 import cl.gerardomascayano.tdmadmin.ui.orders.OrdersFragment
 import com.google.android.material.navigation.NavigationView
@@ -15,6 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var binding: ActivityMainBinding
+    lateinit var actionBarToggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,11 +25,36 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(binding.root)
         setSupportActionBar(binding.appBarMainInclude.toolbar)
         binding.navView.setNavigationItemSelectedListener(this)
+        binding.appBarMainInclude.toolbar.setNavigationOnClickListener { onBackPressed() }
+
         setupNavDrawer()
+        listeningFragmentStack()
     }
 
+    private fun listeningFragmentStack() {
+        supportFragmentManager.addOnBackStackChangedListener {
+            val contract = supportFragmentManager.findFragmentById(R.id.host_fragment) as ActivityFragmentContract
+            manageIconActivity(contract.iconLeftToShow())
+        }
+    }
+
+    fun updateTitle(title: String) {
+        setTitle(title)
+    }
+
+    private fun showBackArrow() {
+        actionBarToggle.isDrawerIndicatorEnabled = false
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun showHamburguerIcon() {
+        actionBarToggle.isDrawerIndicatorEnabled = true
+//        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+    }
+
+
     private fun setupNavDrawer() {
-        val actionBarToggle = ActionBarDrawerToggle(
+        actionBarToggle = ActionBarDrawerToggle(
             this,
             binding.drawerLayout,
             binding.appBarMainInclude.toolbar,
@@ -45,15 +73,29 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         fragment?.let {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.host_fragment, it)
-                .commit()
+
+            replaceFragment(it, false)
 
             if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 binding.drawerLayout.closeDrawer(GravityCompat.START, true)
             }
         }
 
+    }
+
+    fun replaceFragment(fragment: Fragment, addToBackStack: Boolean = true) {
+        val transaction = supportFragmentManager.beginTransaction()
+        if (addToBackStack) transaction.addToBackStack(null)
+        transaction
+            .replace(R.id.host_fragment, fragment)
+            .commit()
+    }
+
+    private fun manageIconActivity(iconType: IconTypeActivity) {
+        when (iconType) {
+            IconTypeActivity.HAMBURGUER -> showHamburguerIcon()
+            IconTypeActivity.ARROW_BACK -> showBackArrow()
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

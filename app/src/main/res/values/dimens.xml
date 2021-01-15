@@ -21,4 +21,7 @@
     <dimen name="order_detail_margin_bottom_title">16dp</dimen>
     <dimen name="order_detail_margin_top_content">4dp</dimen>
 
+<!--    DETAIL PRODUCT-->
+    <dimen name="margin_lateral_detail_product">8dp</dimen>
+    <dimen name="margin_vertical_detail_product">4dp</dimen>
 </resources>

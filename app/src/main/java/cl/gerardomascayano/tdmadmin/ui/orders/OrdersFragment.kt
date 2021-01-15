@@ -10,9 +10,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import cl.gerardomascayano.tdmadmin.MainActivity
 import cl.gerardomascayano.tdmadmin.R
 import cl.gerardomascayano.tdmadmin.core.extension.invisible
 import cl.gerardomascayano.tdmadmin.core.extension.visible
+import cl.gerardomascayano.tdmadmin.core.ui.ActivityFragmentContract
+import cl.gerardomascayano.tdmadmin.core.ui.IconTypeActivity
 import cl.gerardomascayano.tdmadmin.core.ui.MarginItemDecorator
 import cl.gerardomascayano.tdmadmin.databinding.FragmentOrdersBinding
 import cl.gerardomascayano.tdmadmin.domain.order.Order
@@ -24,7 +27,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class OrdersFragment : Fragment(), OrdersAdapter.ClickListener {
+class OrdersFragment : Fragment(), OrdersAdapter.ClickListener, ActivityFragmentContract {
 
     private val ordersViewModel = viewModels<OrdersViewModel>()
     private var _viewBinding: FragmentOrdersBinding? = null
@@ -96,15 +99,15 @@ class OrdersFragment : Fragment(), OrdersAdapter.ClickListener {
         ordersAdapter = OrdersAdapter(this)
     }
 
-
     override fun onOrderClickListener(order: Order) {
-        activity?.supportFragmentManager
-            ?.beginTransaction()
-            ?.replace(R.id.host_fragment, DetailOrderFragment.newInstance(order))
-            ?.addToBackStack(null)?.commit()
+        (activity as? MainActivity)?.replaceFragment(DetailOrderFragment.newInstance(order), true)
     }
+
+    override fun iconLeftToShow(): IconTypeActivity = IconTypeActivity.HAMBURGUER
 
     companion object {
         fun newInstance() = OrdersFragment()
     }
+
+
 }
