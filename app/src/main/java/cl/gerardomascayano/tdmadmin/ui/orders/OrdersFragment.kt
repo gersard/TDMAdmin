@@ -46,6 +46,7 @@ class OrdersFragment : Fragment(), OrdersAdapter.ClickListener, ActivityFragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (requireActivity() as MainActivity).updateTitle("Órdenes")
         initAdapter()
         configureRv()
         listeningOrdersState()

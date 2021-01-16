@@ -47,7 +47,7 @@ class DetailOrderFragment : Fragment(), ActivityFragmentContract {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         configureRv()
-        (requireActivity() as MainActivity).updateTitle("Pedido: #$id")
+        (requireActivity() as MainActivity).updateTitle("Pedido: #${viewModel.value.orderId}")
     }
 
     private fun configureRv() {
@@ -69,12 +69,6 @@ class DetailOrderFragment : Fragment(), ActivityFragmentContract {
         )
 
         val concatOrderDetailAdapters = ConcatAdapter(orderDetailAdapters)
-        viewBinding.rvDetailOrder.addItemDecoration(
-            MarginItemDecorator(
-                resources.getDimension(R.dimen.margin_vertical_detail_product).toInt(),
-                resources.getDimension(R.dimen.margin_lateral_detail_product).toInt()
-            )
-        )
         viewBinding.rvDetailOrder.adapter = concatOrderDetailAdapters
     }
 

@@ -43,6 +43,7 @@
     <!--    FCM-->
     <string name="fcm_topic_order">new_order</string>
     <string name="default_notification_channel_id">ordenes</string>
+    <string name="navigation_button">Navigation button</string>
 
 
 </resources>

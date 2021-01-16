@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import cl.gerardomascayano.tdmadmin.core.ui.ActivityFragmentContract
@@ -17,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var binding: ActivityMainBinding
-    lateinit var actionBarToggle: ActionBarDrawerToggle
+    private var leftIconState = IconTypeActivity.HAMBURGUER
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,8 +28,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding.navView.setNavigationItemSelectedListener(this)
         binding.appBarMainInclude.toolbar.setNavigationOnClickListener { onBackPressed() }
 
-        setupNavDrawer()
         listeningFragmentStack()
+        listeningNavigationButton()
+    }
+
+    private fun listeningNavigationButton() {
+        binding.appBarMainInclude.ibIcon.setOnClickListener {
+            when (leftIconState) {
+                IconTypeActivity.HAMBURGUER -> binding.drawerLayout.openDrawer(GravityCompat.START)
+                IconTypeActivity.ARROW_BACK -> onBackPressed()
+            }
+        }
     }
 
     private fun listeningFragmentStack() {
@@ -39,31 +49,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun updateTitle(title: String) {
-        setTitle(title)
+        binding.appBarMainInclude.tvTitle.text = title
     }
 
     private fun showBackArrow() {
-        actionBarToggle.isDrawerIndicatorEnabled = false
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.appBarMainInclude.ibIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_back_arrow))
     }
 
     private fun showHamburguerIcon() {
-        actionBarToggle.isDrawerIndicatorEnabled = true
-//        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        binding.appBarMainInclude.ibIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_hamburguer))
     }
-
-
-    private fun setupNavDrawer() {
-        actionBarToggle = ActionBarDrawerToggle(
-            this,
-            binding.drawerLayout,
-            binding.appBarMainInclude.toolbar,
-            R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close
-        )
-        actionBarToggle.syncState()
-    }
-
 
     private fun displayFragment(menuId: Int) {
 
@@ -92,6 +87,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun manageIconActivity(iconType: IconTypeActivity) {
+        this.leftIconState = iconType
         when (iconType) {
             IconTypeActivity.HAMBURGUER -> showHamburguerIcon()
             IconTypeActivity.ARROW_BACK -> showBackArrow()

@@ -9,9 +9,8 @@ import cl.gerardomascayano.tdmadmin.domain.order.detail.OrderDateState
 
 class DetailOrderViewModel : ViewModel() {
 
-
-
     fun generateData(order: Order) {
+        orderId = order.id
 
         orderDateState = OrderDateState(order.dateCreated, order.state)
 
@@ -24,7 +23,6 @@ class DetailOrderViewModel : ViewModel() {
 
         headerTextShipping = HeaderOrderText("Datos de Envío")
         contentShipping = listOf(
-            OrderContentTextDetail("Dirección:", order.shipping.address1),
             OrderContentTextDetail("Dirección 1:", order.shipping.address1),
             OrderContentTextDetail("Dirección 2:", order.shipping.address2),
             OrderContentTextDetail("Comuna:", order.shipping.city),
@@ -38,6 +36,8 @@ class DetailOrderViewModel : ViewModel() {
         contentProducts = order.products
 
     }
+
+    var orderId: Int = 0
 
     // HEADER STATE - DATE
     lateinit var orderDateState: OrderDateState
