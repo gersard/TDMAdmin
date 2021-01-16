@@ -6,8 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import cl.gerardomascayano.tdmadmin.R
 import cl.gerardomascayano.tdmadmin.databinding.ItemProductDetailBinding
 import cl.gerardomascayano.tdmadmin.domain.order.Order
+import cl.gerardomascayano.tdmadmin.domain.order.Product
 
-class ProductsDetailAdapter(private val products: List<Order.Product>) : RecyclerView.Adapter<ProductsDetailAdapter.ProductDetailViewHolder>() {
+class ProductsDetailAdapter(private val products: List<Product>) : RecyclerView.Adapter<ProductsDetailAdapter.ProductDetailViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ProductDetailViewHolder(
@@ -20,7 +21,7 @@ class ProductsDetailAdapter(private val products: List<Order.Product>) : Recycle
 
     inner class ProductDetailViewHolder(val viewBinding: ItemProductDetailBinding) : RecyclerView.ViewHolder(viewBinding.root) {
 
-        fun bindProduct(product: Order.Product) {
+        fun bindProduct(product: Product) {
             with(viewBinding.root.context) {
                 viewBinding.tvDescription.text = getString(R.string.product_detail_description, product.name)
                 viewBinding.tvSku.text = getString(R.string.product_detail_sku, product.sku)

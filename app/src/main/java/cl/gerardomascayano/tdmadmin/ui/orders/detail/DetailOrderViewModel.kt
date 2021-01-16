@@ -9,26 +9,29 @@ import cl.gerardomascayano.tdmadmin.domain.order.detail.OrderDateState
 
 class DetailOrderViewModel : ViewModel() {
 
+
+
     fun generateData(order: Order) {
+
         orderDateState = OrderDateState(order.dateCreated, order.state)
 
         headerTextCustomer = HeaderOrderText("Datos Cliente")
         contentCustomer = listOf(
-            OrderContentTextDetail("Nombre", "${order.billing.firstName} ${order.billing.lastName}"),
-            OrderContentTextDetail("Rut", order.rut),
-            OrderContentTextDetail("Teléfono", order.billing.phone)
+            OrderContentTextDetail("Nombre:", "${order.billing.firstName} ${order.billing.lastName}"),
+            OrderContentTextDetail("Rut:", order.rut),
+            OrderContentTextDetail("Teléfono:", order.billing.phone)
         )
 
         headerTextShipping = HeaderOrderText("Datos de Envío")
         contentShipping = listOf(
-            OrderContentTextDetail("Dirección", order.shipping.address1),
-            OrderContentTextDetail("Dirección 1", order.shipping.address1),
-            OrderContentTextDetail("Dirección 2", order.shipping.address2),
-            OrderContentTextDetail("Comuna", order.shipping.city),
-            OrderContentTextDetail("Ciudad", order.shipping.region),
-            OrderContentTextDetail("Método de envío", order.shipping.methodName),
-            OrderContentTextDetail("Método de pago", order.paymentMethodTitle),
-            OrderContentTextDetail("Nota", order.note)
+            OrderContentTextDetail("Dirección:", order.shipping.address1),
+            OrderContentTextDetail("Dirección 1:", order.shipping.address1),
+            OrderContentTextDetail("Dirección 2:", order.shipping.address2),
+            OrderContentTextDetail("Comuna:", order.shipping.city),
+            OrderContentTextDetail("Ciudad:", order.shipping.region),
+            OrderContentTextDetail("Método de envío:", order.shipping.methodName),
+            OrderContentTextDetail("Método de pago:", order.paymentMethodTitle),
+            OrderContentTextDetail("Nota:", order.note)
         )
 
         headerTextProduct = HeaderOrderText("Productos", "Total pedido: $${order.total}")
