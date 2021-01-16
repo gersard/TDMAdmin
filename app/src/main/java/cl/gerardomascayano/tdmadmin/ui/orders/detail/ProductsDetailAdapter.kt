@@ -10,6 +10,7 @@ import cl.gerardomascayano.tdmadmin.domain.order.Product
 
 class ProductsDetailAdapter(private val products: List<Product>) : RecyclerView.Adapter<ProductsDetailAdapter.ProductDetailViewHolder>() {
 
+    override fun getItemViewType(position: Int): Int = OrderDetailRowType.CONTENT_PRODUCT.ordinal
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ProductDetailViewHolder(
         ItemProductDetailBinding.inflate(LayoutInflater.from(parent.context), parent, false)

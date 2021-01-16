@@ -24,4 +24,5 @@
 <!--    DETAIL PRODUCT-->
     <dimen name="margin_lateral_detail_product">8dp</dimen>
     <dimen name="margin_vertical_detail_product">0dp</dimen>
+    <dimen name="divider_height_detail_product">1dp</dimen>
 </resources>

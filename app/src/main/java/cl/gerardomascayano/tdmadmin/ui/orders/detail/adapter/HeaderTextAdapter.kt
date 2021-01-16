@@ -7,8 +7,11 @@ import cl.gerardomascayano.tdmadmin.core.extension.invisible
 import cl.gerardomascayano.tdmadmin.core.extension.visible
 import cl.gerardomascayano.tdmadmin.databinding.HeaderTextDetailOrderBinding
 import cl.gerardomascayano.tdmadmin.domain.order.detail.HeaderOrderText
+import cl.gerardomascayano.tdmadmin.ui.orders.detail.OrderDetailRowType
 
 class HeaderTextAdapter(private val header: HeaderOrderText) : RecyclerView.Adapter<HeaderTextAdapter.HeaderTextViewHolder>() {
+
+    override fun getItemViewType(position: Int): Int = OrderDetailRowType.HEADER_TEXT.ordinal
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = HeaderTextViewHolder(
         HeaderTextDetailOrderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -17,7 +20,6 @@ class HeaderTextAdapter(private val header: HeaderOrderText) : RecyclerView.Adap
     override fun onBindViewHolder(holder: HeaderTextViewHolder, position: Int) = holder.bind(header)
 
     override fun getItemCount(): Int = 1
-
 
     inner class HeaderTextViewHolder(private val viewbinding: HeaderTextDetailOrderBinding) : RecyclerView.ViewHolder(viewbinding.root) {
 

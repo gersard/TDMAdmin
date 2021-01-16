@@ -68,7 +68,16 @@ class DetailOrderFragment : Fragment(), ActivityFragmentContract {
             ProductsDetailAdapter(viewModel.value.contentProducts),
         )
 
-        val concatOrderDetailAdapters = ConcatAdapter(orderDetailAdapters)
+        val config = ConcatAdapter.Config.Builder()
+            .setIsolateViewTypes(false)
+            .build()
+        val concatOrderDetailAdapters = ConcatAdapter(config, orderDetailAdapters)
+        viewBinding.rvDetailOrder.addItemDecoration(
+            HorizontalDividerDetailOrder(
+                ContextCompat.getColor(requireContext(), R.color.divider_gray),
+                resources.getDimensionPixelSize(R.dimen.divider_height_detail_product)
+            )
+        )
         viewBinding.rvDetailOrder.adapter = concatOrderDetailAdapters
     }
 

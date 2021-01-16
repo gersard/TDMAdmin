@@ -13,8 +13,11 @@ import cl.gerardomascayano.tdmadmin.databinding.HeaderTextDetailOrderBinding
 import cl.gerardomascayano.tdmadmin.domain.order.OrderDateUtil
 import cl.gerardomascayano.tdmadmin.domain.order.detail.HeaderOrderText
 import cl.gerardomascayano.tdmadmin.domain.order.detail.OrderDateState
+import cl.gerardomascayano.tdmadmin.ui.orders.detail.OrderDetailRowType
 
 class HeaderOrderStateAdapter(private val header: OrderDateState) : RecyclerView.Adapter<HeaderOrderStateAdapter.HeaderTextViewHolder>() {
+
+    override fun getItemViewType(position: Int): Int = OrderDetailRowType.HEADER_DATE_STATE.ordinal
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = HeaderTextViewHolder(
         HeaderStateDetailOrderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
