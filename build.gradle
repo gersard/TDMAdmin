@@ -2,7 +2,7 @@
 buildscript {
     ext.kotlin_version = "1.4.20"
     ext.hilt_version = "2.28.1-alpha"
-
+    ext.crashlytics_gradle_version = "2.4.1"
     repositories {
         google()
         jcenter()
@@ -12,6 +12,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
         classpath 'com.google.gms:google-services:4.3.4'
+        classpath "com.google.firebase:firebase-crashlytics-gradle:$crashlytics_gradle_version"
     }
 }
 
