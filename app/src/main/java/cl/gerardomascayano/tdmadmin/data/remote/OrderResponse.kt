@@ -28,7 +28,7 @@ data class OrderResponse(
     @SerializedName("line_items")
     val products: List<Product>,
     @SerializedName("shipping_lines")
-    val shippingDetail: List<ShippingDetail>,
+    val shippingDetail: List<ShippingDetail>?,
     @SerializedName("meta_data")
     val metaData: List<MetaData>
 

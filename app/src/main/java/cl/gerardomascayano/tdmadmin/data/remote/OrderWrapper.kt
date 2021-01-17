@@ -20,10 +20,10 @@ class OrderWrapper {
             if (orderResponse.datePaid != null) LocalDateTime.parse(orderResponse.datePaid, DateTimeFormatter.ISO_DATE_TIME) else null,
             orderResponse.total,
             orderResponse.customerId,
-            orderResponse.metaData.first { it.key == OrderConstant.META_DATA_RUT }.value,
+            orderResponse.metaData.firstOrNull { it.key == OrderConstant.META_DATA_RUT }?.value,
             orderResponse.customerNote,
             billingResponseToBilling(orderResponse.billing),
-            shippingResponseToShipping(orderResponse.shipping, orderResponse.shippingDetail.first()),
+            shippingResponseToShipping(orderResponse.shipping, orderResponse.shippingDetail?.firstOrNull()),
             orderResponse.paymentMethod,
             orderResponse.paymentMethodTitle,
             productsResponseToProducts(orderResponse.products)
@@ -44,9 +44,9 @@ class OrderWrapper {
         )
     }
 
-    private fun shippingResponseToShipping(shippingResponse: OrderResponse.Shipping, shippingDetail: OrderResponse.ShippingDetail): Order.Shipping {
+    private fun shippingResponseToShipping(shippingResponse: OrderResponse.Shipping, shippingDetail: OrderResponse.ShippingDetail?): Order.Shipping {
         return Order.Shipping(
-            shippingDetail.methodTitle,
+            shippingDetail?.methodTitle,
             shippingResponse.firstName,
             shippingResponse.lastName,
             shippingResponse.address1,

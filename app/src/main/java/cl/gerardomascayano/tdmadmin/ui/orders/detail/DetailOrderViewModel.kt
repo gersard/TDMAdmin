@@ -27,7 +27,7 @@ class DetailOrderViewModel @ViewModelInject constructor(private val useCase: Ord
         headerTextCustomer = HeaderOrderText("Datos Cliente")
         contentCustomer = listOf(
             OrderContentTextDetail("Nombre:", "${order.billing.firstName} ${order.billing.lastName}"),
-            OrderContentTextDetail("Rut:", order.rut),
+            OrderContentTextDetail("Rut:", order.rut ?: "---"),
             OrderContentTextDetail("Teléfono:", order.billing.phone)
         )
 
@@ -37,7 +37,7 @@ class DetailOrderViewModel @ViewModelInject constructor(private val useCase: Ord
             OrderContentTextDetail("Dirección 2:", order.shipping.address2),
             OrderContentTextDetail("Comuna:", order.shipping.city),
             OrderContentTextDetail("Ciudad:", order.shipping.region),
-            OrderContentTextDetail("Método de envío:", order.shipping.methodName),
+            OrderContentTextDetail("Método de envío:", order.shipping.methodName ?: "---"),
             OrderContentTextDetail("Método de pago:", order.paymentMethodTitle),
             OrderContentTextDetail("Nota:", order.note)
         )
