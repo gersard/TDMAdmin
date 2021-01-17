@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cl.gerardomascayano.tdmadmin.MainActivity
 import cl.gerardomascayano.tdmadmin.R
+import cl.gerardomascayano.tdmadmin.core.GenericState
+import cl.gerardomascayano.tdmadmin.core.extension.exhaustive
 import cl.gerardomascayano.tdmadmin.core.extension.format
 import cl.gerardomascayano.tdmadmin.core.ui.ActivityFragmentContract
 import cl.gerardomascayano.tdmadmin.core.ui.IconTypeActivity
@@ -48,6 +51,19 @@ class DetailOrderFragment : Fragment(), ActivityFragmentContract {
         super.onViewCreated(view, savedInstanceState)
         configureRv()
         (requireActivity() as MainActivity).updateTitle("Pedido: #${viewModel.value.orderId}")
+        observeUpdateOrder()
+    }
+
+    private fun observeUpdateOrder() {
+        if (!viewModel.value.updateOrder.hasActiveObservers()) {
+            viewModel.value.updateOrder.observe(viewLifecycleOwner) { state ->
+                when (state) {
+                    is GenericState.Loading -> Unit
+                    is GenericState.Error -> Toast.makeText(requireContext(), state.errorMessage, Toast.LENGTH_LONG).show()
+                    is GenericState.Success<*> -> Toast.makeText(requireContext(), "Se actualizó correctamente", Toast.LENGTH_LONG).show()
+                }.exhaustive
+            }
+        }
     }
 
     private fun configureRv() {
