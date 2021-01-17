@@ -6,6 +6,7 @@ import retrofit2.HttpException
 import retrofit2.Response
 import timber.log.Timber
 import java.io.IOException
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 class OrdersDataSource @Inject constructor(
@@ -25,6 +26,20 @@ class OrdersDataSource @Inject constructor(
             LoadResult.Error(exception)
         } catch (exception: HttpException) {
             LoadResult.Error(exception)
+        } catch (exception: UnknownHostException) {
+            LoadResult.Error(exception)
+        }
+    }
+
+    suspend fun updateOrder(orderUpdate: OrderUpdate): OrderResponse? {
+        return try {
+            ordersService.updateOrder(orderUpdate.idOrder, orderUpdate)
+        } catch (exception: IOException) {
+            null
+        } catch (exception: HttpException) {
+            null
+        } catch (exception: UnknownHostException) {
+            null
         }
     }
 }

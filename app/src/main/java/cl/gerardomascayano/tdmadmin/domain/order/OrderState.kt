@@ -4,7 +4,7 @@ import androidx.annotation.ColorRes
 import cl.gerardomascayano.tdmadmin.R
 
 enum class OrderState(
-    private val id: String,
+    val id: String,
     val description: String,
     @ColorRes val color: Int
 ) {

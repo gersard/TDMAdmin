@@ -1,13 +1,23 @@
 package cl.gerardomascayano.tdmadmin.ui.orders.detail
 
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import cl.gerardomascayano.tdmadmin.core.GenericState
 import cl.gerardomascayano.tdmadmin.domain.order.Order
+import cl.gerardomascayano.tdmadmin.domain.order.OrderState
+import cl.gerardomascayano.tdmadmin.domain.order.OrdersUseCase
 import cl.gerardomascayano.tdmadmin.domain.order.Product
 import cl.gerardomascayano.tdmadmin.domain.order.detail.HeaderOrderText
 import cl.gerardomascayano.tdmadmin.domain.order.detail.OrderContentTextDetail
 import cl.gerardomascayano.tdmadmin.domain.order.detail.OrderDateState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class DetailOrderViewModel : ViewModel() {
+class DetailOrderViewModel @ViewModelInject constructor(private val useCase: OrdersUseCase) : ViewModel() {
 
     fun generateData(order: Order) {
         orderId = order.id
@@ -35,6 +45,18 @@ class DetailOrderViewModel : ViewModel() {
         headerTextProduct = HeaderOrderText("Productos", "Total pedido: $${order.total}")
         contentProducts = order.products
 
+    }
+
+    private val _updateOrder = MutableLiveData<GenericState>()
+    val updateOrder: LiveData<GenericState> get() = _updateOrder
+
+    fun updateStatus(state: OrderState) {
+        viewModelScope.launch() {
+            _updateOrder.value = GenericState.Loading(true)
+            val stateResult = useCase.updateStatus(orderId, state.id)
+            _updateOrder.value = GenericState.Loading(false)
+            _updateOrder.value = stateResult
+        }
     }
 
     var orderId: Int = 0

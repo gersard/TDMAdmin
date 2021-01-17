@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter
 
 class OrderWrapper {
 
+    // NETWORK -> DOMAIN
     fun ordersResponseToOrder(ordersResponse: List<OrderResponse>): List<Order> =
         ordersResponse.map { orderResponseToOrder(it) }
 
