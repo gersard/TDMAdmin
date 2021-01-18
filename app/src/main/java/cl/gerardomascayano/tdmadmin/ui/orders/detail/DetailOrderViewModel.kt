@@ -22,7 +22,7 @@ class DetailOrderViewModel @ViewModelInject constructor(private val useCase: Ord
     fun generateData(order: Order) {
         orderId = order.id
 
-        orderDateState = OrderDateState(order.dateCreated, order.state)
+        orderDateState = OrderDateState(order.dateCreated, order.state, false)
 
         headerTextCustomer = HeaderOrderText("Datos Cliente")
         contentCustomer = listOf(
@@ -52,10 +52,12 @@ class DetailOrderViewModel @ViewModelInject constructor(private val useCase: Ord
 
     fun updateStatus(stateId: String) {
         viewModelScope.launch() {
+            orderDateState.isUpdating = true
             _updateOrder.value = GenericState.Loading(true)
             val stateResult = useCase.updateStatus(orderId, stateId)
-            _updateOrder.value = GenericState.Loading(false)
+            orderDateState.isUpdating = false
             _updateOrder.value = stateResult
+            _updateOrder.value = GenericState.Loading(false)
         }
     }
 

@@ -27,4 +27,13 @@
         tools:backgroundTint="@color/divider_gray"
         tools:text="Completado" />
 
+    <ProgressBar
+        android:id="@+id/pb_state_update"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_gravity="end"
+        android:layout_marginEnd="16dp"
+        android:indeterminateTint="@color/color_primary"
+        android:visibility="gone" />
+
 </FrameLayout>

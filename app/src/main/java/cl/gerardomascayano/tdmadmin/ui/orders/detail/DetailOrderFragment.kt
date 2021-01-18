@@ -1,6 +1,5 @@
 package cl.gerardomascayano.tdmadmin.ui.orders.detail
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,7 +24,6 @@ import cl.gerardomascayano.tdmadmin.ui.orders.detail.adapter.ContentTextAdapter
 import cl.gerardomascayano.tdmadmin.ui.orders.detail.adapter.HeaderOrderStateAdapter
 import cl.gerardomascayano.tdmadmin.ui.orders.detail.adapter.HeaderTextAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class DetailOrderFragment : Fragment(), ActivityFragmentContract, OnClickListener<String> {
@@ -34,6 +32,7 @@ class DetailOrderFragment : Fragment(), ActivityFragmentContract, OnClickListene
     private var _viewBinding: DetailOrderFragmentBinding? = null
     private val viewBinding: DetailOrderFragmentBinding
         get() = _viewBinding!!
+    private lateinit var headerOrderStateAdapter: HeaderOrderStateAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,25 +48,32 @@ class DetailOrderFragment : Fragment(), ActivityFragmentContract, OnClickListene
         super.onViewCreated(view, savedInstanceState)
         configureRv()
         (requireActivity() as MainActivity).updateTitle("Pedido: #${viewModel.value.orderId}")
-        observeUpdateOrder()
     }
 
     private fun observeUpdateOrder() {
         if (!viewModel.value.updateOrder.hasActiveObservers()) {
             viewModel.value.updateOrder.observe(viewLifecycleOwner) { state ->
                 when (state) {
-                    is GenericState.Loading -> Unit
+                    is GenericState.Loading -> {
+                        headerOrderStateAdapter.notifyItemChanged(0)
+                    }
                     is GenericState.Error -> Toast.makeText(requireContext(), state.errorMessage, Toast.LENGTH_LONG).show()
-                    is GenericState.Success<*> -> Toast.makeText(requireContext(), "Se actualizó correctamente", Toast.LENGTH_LONG).show()
+                    is GenericState.Success<*> -> {
+                        Toast.makeText(requireContext(), "Se actualizó correctamente", Toast.LENGTH_LONG).show()
+                        val orderUpdated = (state.data as Order)
+                        viewModel.value.orderDateState.state = orderUpdated.state
+                    }
                 }.exhaustive
             }
         }
     }
 
     private fun configureRv() {
+        // STATE
+        headerOrderStateAdapter = HeaderOrderStateAdapter(viewModel.value.orderDateState, this)
+
         val orderDetailAdapters = listOf(
-            // STATE
-            HeaderOrderStateAdapter(viewModel.value.orderDateState, this),
+            headerOrderStateAdapter,
 
             // CUSTOMER
             HeaderTextAdapter(viewModel.value.headerTextCustomer),
@@ -97,14 +103,15 @@ class DetailOrderFragment : Fragment(), ActivityFragmentContract, OnClickListene
 
 
     override fun iconLeftToShow(): IconTypeActivity = IconTypeActivity.ARROW_BACK
-    override fun onClickListener(stateId: String) {
+    override fun onClickListener(item: String) {
         val states = OrderState.values()
-            .filter { it.id != stateId }
+            .filter { it.id != item }
             .map { it.description }.toTypedArray()
 
         AlertDialog.Builder(requireContext())
             .setTitle("Actualizar estado")
             .setItems(states) { _, which ->
+                observeUpdateOrder()
                 val stateSelected = OrderState.fromDescription(states[which])
                 viewModel.value.updateStatus(stateSelected.id)
             }

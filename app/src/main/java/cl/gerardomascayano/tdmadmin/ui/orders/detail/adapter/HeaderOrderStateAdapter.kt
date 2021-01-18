@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import cl.gerardomascayano.tdmadmin.core.OnClickListener
 import cl.gerardomascayano.tdmadmin.core.extension.format
+import cl.gerardomascayano.tdmadmin.core.extension.gone
 import cl.gerardomascayano.tdmadmin.core.extension.invisible
 import cl.gerardomascayano.tdmadmin.core.extension.visible
 import cl.gerardomascayano.tdmadmin.databinding.HeaderStateDetailOrderBinding
@@ -41,9 +42,16 @@ class HeaderOrderStateAdapter(
 
         fun bind(orderDateState: OrderDateState) {
             viewbinding.tvDateCreated.text = orderDateState.dateCreated.format(OrderDateUtil.PATTERN_ORDER_DATE_CREATED_LIST)
+            if (orderDateState.isUpdating){
+                viewbinding.pbStateUpdate.visible()
+                viewbinding.tvStatus.gone()
+            }else{
+                viewbinding.pbStateUpdate.gone()
+                viewbinding.tvStatus.visible()
+                viewbinding.tvStatus.text = orderDateState.state.description
+                viewbinding.tvStatus.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(viewbinding.root.context, orderDateState.state.color))
+            }
 
-            viewbinding.tvStatus.text = orderDateState.state.description
-            viewbinding.tvStatus.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(viewbinding.root.context, orderDateState.state.color))
         }
 
         override fun onClick(v: View?) {

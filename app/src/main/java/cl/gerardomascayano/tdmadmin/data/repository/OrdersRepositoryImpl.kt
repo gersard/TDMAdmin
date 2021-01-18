@@ -32,7 +32,7 @@ class OrdersRepositoryImpl @Inject constructor(
 
     override suspend fun updateOrder(orderId: Int, status: String): GenericState {
         return remoteDataSource.updateOrder(OrderUpdate(orderId, status))?.let {
-            GenericState.Success(it)
+            GenericState.Success(orderWrapper.orderResponseToOrder(it))
         } ?: kotlin.run { GenericState.Error("Error al actualizar orden") }
     }
 
