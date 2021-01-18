@@ -1,36 +1,34 @@
 package cl.gerardomascayano.tdmadmin.ui.orders.detail
 
-import android.content.res.ColorStateList
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ConcatAdapter
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import cl.gerardomascayano.tdmadmin.MainActivity
 import cl.gerardomascayano.tdmadmin.R
 import cl.gerardomascayano.tdmadmin.core.GenericState
+import cl.gerardomascayano.tdmadmin.core.OnClickListener
 import cl.gerardomascayano.tdmadmin.core.extension.exhaustive
-import cl.gerardomascayano.tdmadmin.core.extension.format
 import cl.gerardomascayano.tdmadmin.core.ui.ActivityFragmentContract
 import cl.gerardomascayano.tdmadmin.core.ui.IconTypeActivity
-import cl.gerardomascayano.tdmadmin.core.ui.MarginItemDecorator
 import cl.gerardomascayano.tdmadmin.databinding.DetailOrderFragmentBinding
 import cl.gerardomascayano.tdmadmin.domain.order.Order
-import cl.gerardomascayano.tdmadmin.domain.order.OrderDateUtil
+import cl.gerardomascayano.tdmadmin.domain.order.OrderState
 import cl.gerardomascayano.tdmadmin.ui.orders.detail.adapter.ContentTextAdapter
 import cl.gerardomascayano.tdmadmin.ui.orders.detail.adapter.HeaderOrderStateAdapter
 import cl.gerardomascayano.tdmadmin.ui.orders.detail.adapter.HeaderTextAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
-class DetailOrderFragment : Fragment(), ActivityFragmentContract {
+class DetailOrderFragment : Fragment(), ActivityFragmentContract, OnClickListener<String> {
 
     private val viewModel = viewModels<DetailOrderViewModel>()
     private var _viewBinding: DetailOrderFragmentBinding? = null
@@ -69,7 +67,7 @@ class DetailOrderFragment : Fragment(), ActivityFragmentContract {
     private fun configureRv() {
         val orderDetailAdapters = listOf(
             // STATE
-            HeaderOrderStateAdapter(viewModel.value.orderDateState),
+            HeaderOrderStateAdapter(viewModel.value.orderDateState, this),
 
             // CUSTOMER
             HeaderTextAdapter(viewModel.value.headerTextCustomer),
@@ -97,6 +95,23 @@ class DetailOrderFragment : Fragment(), ActivityFragmentContract {
         viewBinding.rvDetailOrder.adapter = concatOrderDetailAdapters
     }
 
+
+    override fun iconLeftToShow(): IconTypeActivity = IconTypeActivity.ARROW_BACK
+    override fun onClickListener(stateId: String) {
+        val states = OrderState.values()
+            .filter { it.id != stateId }
+            .map { it.description }.toTypedArray()
+
+        AlertDialog.Builder(requireContext())
+            .setTitle("Actualizar estado")
+            .setItems(states) { _, which ->
+                val stateSelected = OrderState.fromDescription(states[which])
+                viewModel.value.updateStatus(stateSelected.id)
+            }
+            .create()
+            .show()
+    }
+
     companion object {
 
         const val ARG_ORDER = "order"
@@ -107,7 +122,4 @@ class DetailOrderFragment : Fragment(), ActivityFragmentContract {
             }
         }
     }
-
-    override fun iconLeftToShow(): IconTypeActivity = IconTypeActivity.ARROW_BACK
-
 }

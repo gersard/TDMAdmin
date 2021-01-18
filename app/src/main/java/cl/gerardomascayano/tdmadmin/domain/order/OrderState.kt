@@ -19,5 +19,6 @@ enum class OrderState(
 
     companion object {
         fun from(id: String) = values().first { it.id == id }
+        fun fromDescription(description: String) = values().first { it.description == description }
     }
 }

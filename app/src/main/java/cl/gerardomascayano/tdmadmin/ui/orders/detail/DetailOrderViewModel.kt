@@ -50,10 +50,10 @@ class DetailOrderViewModel @ViewModelInject constructor(private val useCase: Ord
     private val _updateOrder = MutableLiveData<GenericState>()
     val updateOrder: LiveData<GenericState> get() = _updateOrder
 
-    fun updateStatus(state: OrderState) {
+    fun updateStatus(stateId: String) {
         viewModelScope.launch() {
             _updateOrder.value = GenericState.Loading(true)
-            val stateResult = useCase.updateStatus(orderId, state.id)
+            val stateResult = useCase.updateStatus(orderId, stateId)
             _updateOrder.value = GenericState.Loading(false)
             _updateOrder.value = stateResult
         }
