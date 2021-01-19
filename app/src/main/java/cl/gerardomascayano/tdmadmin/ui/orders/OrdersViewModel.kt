@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import cl.gerardomascayano.tdmadmin.domain.order.Order
+import cl.gerardomascayano.tdmadmin.domain.order.OrderState
 import cl.gerardomascayano.tdmadmin.domain.order.OrdersUseCase
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -20,12 +21,16 @@ class OrdersViewModel @ViewModelInject constructor(private val useCase: OrdersUs
             orders = useCase.getOrders()
                 .cachedIn(viewModelScope)
         }
-
         return orders!!
+    }
+
+    fun invalidateData() {
+        orders = null
     }
 
     fun clearOrders() {
         orders = null
+        Timber.d("ON CLEARED")
     }
 
 }

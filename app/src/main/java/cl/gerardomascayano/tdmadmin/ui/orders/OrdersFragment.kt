@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
@@ -29,7 +30,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class OrdersFragment : Fragment(), OrdersAdapter.ClickListener, ActivityFragmentContract {
 
-    private val ordersViewModel = viewModels<OrdersViewModel>()
+    private val ordersViewModel = activityViewModels<OrdersViewModel>()
     private var _viewBinding: FragmentOrdersBinding? = null
     private val viewBinding: FragmentOrdersBinding
         get() = _viewBinding!!
@@ -60,7 +61,7 @@ class OrdersFragment : Fragment(), OrdersAdapter.ClickListener, ActivityFragment
     private fun listeningOrdersState() {
         ordersAdapter.addLoadStateListener { state ->
             when (state.refresh) {
-                is LoadState.Loading -> viewBinding.srlOrders.isRefreshing = true
+                is LoadState.Loading -> viewBinding.srlOrders.post { viewBinding.srlOrders.isRefreshing = true }
                 is LoadState.NotLoading -> {
                     viewBinding.srlOrders.isRefreshing = false
                     if (state.refresh.endOfPaginationReached && ordersAdapter.itemCount < 1) emptyOrders()
@@ -77,6 +78,7 @@ class OrdersFragment : Fragment(), OrdersAdapter.ClickListener, ActivityFragment
                 .collectLatest {
                     ordersAdapter.submitData(it)
                 }
+
         }
     }
 

@@ -8,4 +8,5 @@ interface OrdersUseCase {
 
     fun getOrders(): Flow<PagingData<Order>>
     suspend fun updateStatus(orderId: Int, status: String): GenericState
+    fun invalidateData()
 }

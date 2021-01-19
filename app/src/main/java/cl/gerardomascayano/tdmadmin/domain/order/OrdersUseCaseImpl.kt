@@ -16,5 +16,9 @@ class OrdersUseCaseImpl @Inject constructor(private val repo: OrdersRepository) 
         return repo.updateOrder(orderId, status)
     }
 
+    override fun invalidateData() {
+        repo.invalidateData()
+    }
+
 
 }

@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ConcatAdapter
 import cl.gerardomascayano.tdmadmin.MainActivity
@@ -20,6 +21,7 @@ import cl.gerardomascayano.tdmadmin.core.ui.IconTypeActivity
 import cl.gerardomascayano.tdmadmin.databinding.DetailOrderFragmentBinding
 import cl.gerardomascayano.tdmadmin.domain.order.Order
 import cl.gerardomascayano.tdmadmin.domain.order.OrderState
+import cl.gerardomascayano.tdmadmin.ui.orders.OrdersViewModel
 import cl.gerardomascayano.tdmadmin.ui.orders.detail.adapter.ContentTextAdapter
 import cl.gerardomascayano.tdmadmin.ui.orders.detail.adapter.HeaderOrderStateAdapter
 import cl.gerardomascayano.tdmadmin.ui.orders.detail.adapter.HeaderTextAdapter
@@ -29,6 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class DetailOrderFragment : Fragment(), ActivityFragmentContract, OnClickListener<String> {
 
     private val viewModel = viewModels<DetailOrderViewModel>()
+    private val ordersViewModel = activityViewModels<OrdersViewModel>()
     private var _viewBinding: DetailOrderFragmentBinding? = null
     private val viewBinding: DetailOrderFragmentBinding
         get() = _viewBinding!!
@@ -114,6 +117,7 @@ class DetailOrderFragment : Fragment(), ActivityFragmentContract, OnClickListene
                 observeUpdateOrder()
                 val stateSelected = OrderState.fromDescription(states[which])
                 viewModel.value.updateStatus(stateSelected.id)
+                ordersViewModel.value.invalidateData()
             }
             .create()
             .show()

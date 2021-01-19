@@ -36,6 +36,10 @@ class OrdersRepositoryImpl @Inject constructor(
         } ?: kotlin.run { GenericState.Error("Error al actualizar orden") }
     }
 
+    override fun invalidateData() {
+        remoteDataSource.invalidate()
+    }
+
 
     private fun getDefaultPageConfig(): PagingConfig {
         return PagingConfig(pageSize = ApiConstants.DEFAULT_PAGE_SIZE, enablePlaceholders = false)

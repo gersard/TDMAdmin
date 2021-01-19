@@ -9,4 +9,6 @@ interface OrdersRepository {
 
     fun getOrders(): Flow<PagingData<Order>>
     suspend fun updateOrder(orderId: Int, status: String): GenericState
+
+    fun invalidateData()
 }
