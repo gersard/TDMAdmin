@@ -216,3 +216,4 @@ fabric.properties
 /.idea/
 /app/release/
 /app/google-services.json
+/secrets.properties

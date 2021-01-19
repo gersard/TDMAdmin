@@ -28,8 +28,8 @@ object AppModule {
                 writeTimeout(10, TimeUnit.SECONDS)
                 addInterceptor(
                     BasicAuthInterceptor(
-                        "ck_fe6ed93b10c9d04fd184144a9e5042bed032bb68",
-                        "cs_3a8772496fb677a891a576b03f78e76a5e9c81bb"
+                        BuildConfig.CLIENT_ID,
+                        BuildConfig.SECRET_ID
                     )
                 )
 
