@@ -1,5 +1,7 @@
 package cl.gerardomascayano.tdmadmin.ui.orders.detail
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,9 +28,10 @@ import cl.gerardomascayano.tdmadmin.ui.orders.detail.adapter.ContentTextAdapter
 import cl.gerardomascayano.tdmadmin.ui.orders.detail.adapter.HeaderOrderStateAdapter
 import cl.gerardomascayano.tdmadmin.ui.orders.detail.adapter.HeaderTextAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.regex.Pattern
 
 @AndroidEntryPoint
-class DetailOrderFragment : Fragment(), ActivityFragmentContract, OnClickListener<String> {
+class DetailOrderFragment : Fragment(), ActivityFragmentContract, OnClickListener<Pair<TypeContent, String>> {
 
     private val viewModel = viewModels<DetailOrderViewModel>()
     private val ordersViewModel = activityViewModels<OrdersViewModel>()
@@ -80,7 +83,7 @@ class DetailOrderFragment : Fragment(), ActivityFragmentContract, OnClickListene
 
             // CUSTOMER
             HeaderTextAdapter(viewModel.value.headerTextCustomer),
-            ContentTextAdapter(viewModel.value.contentCustomer),
+            ContentTextAdapter(viewModel.value.contentCustomer, this),
 
             // SHIPPING
             HeaderTextAdapter(viewModel.value.headerTextShipping),
@@ -106,21 +109,33 @@ class DetailOrderFragment : Fragment(), ActivityFragmentContract, OnClickListene
 
 
     override fun iconLeftToShow(): IconTypeActivity = IconTypeActivity.ARROW_BACK
-    override fun onClickListener(item: String) {
-        val states = OrderState.values()
-            .filter { it.id != item }
-            .map { it.description }.toTypedArray()
+    override fun onClickListener(item: Pair<TypeContent, String>) {
+        val (typeContent, content) = item
+        when (typeContent) {
+            TypeContent.NO_TYPE -> Unit
+            TypeContent.ORDER_STATE -> {
+                val states = OrderState.values()
+                    .filter { it.id != content }
+                    .map { it.description }.toTypedArray()
 
-        AlertDialog.Builder(requireContext())
-            .setTitle("Actualizar estado")
-            .setItems(states) { _, which ->
-                observeUpdateOrder()
-                val stateSelected = OrderState.fromDescription(states[which])
-                viewModel.value.updateStatus(stateSelected.id)
-                ordersViewModel.value.invalidateData()
+                AlertDialog.Builder(requireContext())
+                    .setTitle("Actualizar estado")
+                    .setItems(states) { _, which ->
+                        observeUpdateOrder()
+                        val stateSelected = OrderState.fromDescription(states[which])
+                        viewModel.value.updateStatus(stateSelected.id)
+                        ordersViewModel.value.invalidateData()
+                    }
+                    .create()
+                    .show()
             }
-            .create()
-            .show()
+            TypeContent.PHONE_NUMBER -> {
+                val intent = Intent()
+                intent.action = Intent.ACTION_DIAL
+                intent.data = Uri.parse("tel: $content")
+                startActivity(intent)
+            }
+        }
     }
 
     companion object {

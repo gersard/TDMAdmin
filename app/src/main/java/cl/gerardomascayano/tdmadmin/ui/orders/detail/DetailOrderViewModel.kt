@@ -22,13 +22,13 @@ class DetailOrderViewModel @ViewModelInject constructor(private val useCase: Ord
     fun generateData(order: Order) {
         orderId = order.id
 
-        orderDateState = OrderDateState(order.dateCreated, order.state, false)
+        orderDateState = OrderDateState(order.dateCreated, order.state, false, TypeContent.ORDER_STATE, true)
 
         headerTextCustomer = HeaderOrderText("Datos Cliente")
         contentCustomer = listOf(
             OrderContentTextDetail("Nombre:", "${order.billing.firstName} ${order.billing.lastName}"),
             OrderContentTextDetail("Rut:", order.rut ?: "---"),
-            OrderContentTextDetail("Teléfono:", order.billing.phone)
+            OrderContentTextDetail("Teléfono:", order.billing.phone, TypeContent.PHONE_NUMBER, true)
         )
 
         headerTextShipping = HeaderOrderText("Datos de Envío")

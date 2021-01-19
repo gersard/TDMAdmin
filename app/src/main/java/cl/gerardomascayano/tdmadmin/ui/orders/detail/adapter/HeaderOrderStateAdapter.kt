@@ -17,10 +17,11 @@ import cl.gerardomascayano.tdmadmin.domain.order.OrderDateUtil
 import cl.gerardomascayano.tdmadmin.domain.order.detail.HeaderOrderText
 import cl.gerardomascayano.tdmadmin.domain.order.detail.OrderDateState
 import cl.gerardomascayano.tdmadmin.ui.orders.detail.OrderDetailRowType
+import cl.gerardomascayano.tdmadmin.ui.orders.detail.TypeContent
 
 class HeaderOrderStateAdapter(
     private val header: OrderDateState,
-    private val onClickListener: OnClickListener<String>? = null
+    private val onClickListener: OnClickListener<Pair<TypeContent, String>>? = null
 ) : RecyclerView.Adapter<HeaderOrderStateAdapter.HeaderTextViewHolder>() {
 
     override fun getItemViewType(position: Int): Int = OrderDetailRowType.HEADER_DATE_STATE.ordinal
@@ -42,10 +43,10 @@ class HeaderOrderStateAdapter(
 
         fun bind(orderDateState: OrderDateState) {
             viewbinding.tvDateCreated.text = orderDateState.dateCreated.format(OrderDateUtil.PATTERN_ORDER_DATE_CREATED_LIST)
-            if (orderDateState.isUpdating){
+            if (orderDateState.isUpdating) {
                 viewbinding.pbStateUpdate.visible()
                 viewbinding.tvStatus.gone()
-            }else{
+            } else {
                 viewbinding.pbStateUpdate.gone()
                 viewbinding.tvStatus.visible()
                 viewbinding.tvStatus.text = orderDateState.state.description
@@ -55,7 +56,7 @@ class HeaderOrderStateAdapter(
         }
 
         override fun onClick(v: View?) {
-            onClickListener?.onClickListener(header.state.id)
+            onClickListener?.onClickListener(Pair(TypeContent.ORDER_STATE, header.state.id))
         }
 
     }
