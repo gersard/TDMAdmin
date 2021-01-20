@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +15,8 @@ import cl.gerardomascayano.tdmadmin.R
 import cl.gerardomascayano.tdmadmin.core.extension.invisible
 import cl.gerardomascayano.tdmadmin.core.extension.visible
 import cl.gerardomascayano.tdmadmin.core.ui.ActivityFragmentContract
-import cl.gerardomascayano.tdmadmin.core.ui.IconTypeActivity
+import cl.gerardomascayano.tdmadmin.core.ui.IconLeftTypeActivity
+import cl.gerardomascayano.tdmadmin.core.ui.IconRightTypeActivity
 import cl.gerardomascayano.tdmadmin.core.ui.MarginItemDecorator
 import cl.gerardomascayano.tdmadmin.databinding.FragmentOrdersBinding
 import cl.gerardomascayano.tdmadmin.domain.order.Order
@@ -106,7 +106,8 @@ class OrdersFragment : Fragment(), OrdersAdapter.ClickListener, ActivityFragment
         (activity as? MainActivity)?.replaceFragment(DetailOrderFragment.newInstance(order), true)
     }
 
-    override fun iconLeftToShow(): IconTypeActivity = IconTypeActivity.HAMBURGUER
+    override fun iconLeftToShow(): IconLeftTypeActivity = IconLeftTypeActivity.HAMBURGUER
+    override fun iconRightToShow(): IconRightTypeActivity = IconRightTypeActivity.NONE
 
     companion object {
         fun newInstance() = OrdersFragment()

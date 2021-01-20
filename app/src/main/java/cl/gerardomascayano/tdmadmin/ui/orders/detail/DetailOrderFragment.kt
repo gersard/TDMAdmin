@@ -19,7 +19,8 @@ import cl.gerardomascayano.tdmadmin.core.GenericState
 import cl.gerardomascayano.tdmadmin.core.OnClickListener
 import cl.gerardomascayano.tdmadmin.core.extension.exhaustive
 import cl.gerardomascayano.tdmadmin.core.ui.ActivityFragmentContract
-import cl.gerardomascayano.tdmadmin.core.ui.IconTypeActivity
+import cl.gerardomascayano.tdmadmin.core.ui.IconLeftTypeActivity
+import cl.gerardomascayano.tdmadmin.core.ui.IconRightTypeActivity
 import cl.gerardomascayano.tdmadmin.databinding.DetailOrderFragmentBinding
 import cl.gerardomascayano.tdmadmin.domain.order.Order
 import cl.gerardomascayano.tdmadmin.domain.order.OrderState
@@ -28,7 +29,6 @@ import cl.gerardomascayano.tdmadmin.ui.orders.detail.adapter.ContentTextAdapter
 import cl.gerardomascayano.tdmadmin.ui.orders.detail.adapter.HeaderOrderStateAdapter
 import cl.gerardomascayano.tdmadmin.ui.orders.detail.adapter.HeaderTextAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.regex.Pattern
 
 @AndroidEntryPoint
 class DetailOrderFragment : Fragment(), ActivityFragmentContract, OnClickListener<Pair<TypeContent, String>> {
@@ -108,7 +108,9 @@ class DetailOrderFragment : Fragment(), ActivityFragmentContract, OnClickListene
     }
 
 
-    override fun iconLeftToShow(): IconTypeActivity = IconTypeActivity.ARROW_BACK
+    override fun iconLeftToShow(): IconLeftTypeActivity = IconLeftTypeActivity.ARROW_BACK
+    override fun iconRightToShow(): IconRightTypeActivity = IconRightTypeActivity.NOTE
+
     override fun onClickListener(item: Pair<TypeContent, String>) {
         val (typeContent, content) = item
         when (typeContent) {
