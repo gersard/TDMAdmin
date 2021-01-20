@@ -9,7 +9,7 @@ import cl.gerardomascayano.tdmadmin.data.remote.OrderUpdate
 import cl.gerardomascayano.tdmadmin.data.remote.OrderWrapper
 import cl.gerardomascayano.tdmadmin.data.remote.OrdersDataSource
 import cl.gerardomascayano.tdmadmin.domain.order.Order
-import cl.gerardomascayano.tdmadmin.network.ApiConstants
+import cl.gerardomascayano.tdmadmin.data.remote.network.ApiConstants
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import timber.log.Timber

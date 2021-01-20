@@ -1,6 +1,6 @@
 package cl.gerardomascayano.tdmadmin.data.remote
 
-import cl.gerardomascayano.tdmadmin.network.ApiConstants
+import cl.gerardomascayano.tdmadmin.data.remote.network.ApiConstants
 import retrofit2.Response
 import retrofit2.http.*
 

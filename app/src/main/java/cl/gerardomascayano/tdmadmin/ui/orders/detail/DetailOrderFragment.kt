@@ -24,7 +24,7 @@ import cl.gerardomascayano.tdmadmin.core.ui.IconRightTypeActivity
 import cl.gerardomascayano.tdmadmin.databinding.DetailOrderFragmentBinding
 import cl.gerardomascayano.tdmadmin.domain.order.Order
 import cl.gerardomascayano.tdmadmin.domain.order.OrderState
-import cl.gerardomascayano.tdmadmin.ui.orders.OrdersViewModel
+import cl.gerardomascayano.tdmadmin.ui.orders.list.OrdersViewModel
 import cl.gerardomascayano.tdmadmin.ui.orders.detail.adapter.ContentTextAdapter
 import cl.gerardomascayano.tdmadmin.ui.orders.detail.adapter.HeaderOrderStateAdapter
 import cl.gerardomascayano.tdmadmin.ui.orders.detail.adapter.HeaderTextAdapter
@@ -138,6 +138,11 @@ class DetailOrderFragment : Fragment(), ActivityFragmentContract, OnClickListene
                 startActivity(intent)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _viewBinding = null
     }
 
     companion object {

@@ -6,12 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
-import cl.gerardomascayano.tdmadmin.core.extension.invisible
 import cl.gerardomascayano.tdmadmin.core.ui.ActivityFragmentContract
 import cl.gerardomascayano.tdmadmin.core.ui.IconLeftTypeActivity
 import cl.gerardomascayano.tdmadmin.core.ui.IconRightTypeActivity
 import cl.gerardomascayano.tdmadmin.databinding.ActivityMainBinding
-import cl.gerardomascayano.tdmadmin.ui.orders.OrdersFragment
+import cl.gerardomascayano.tdmadmin.ui.orders.list.OrdersFragment
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 

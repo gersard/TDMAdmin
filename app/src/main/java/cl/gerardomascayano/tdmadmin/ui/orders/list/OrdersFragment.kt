@@ -1,4 +1,4 @@
-package cl.gerardomascayano.tdmadmin.ui.orders
+package cl.gerardomascayano.tdmadmin.ui.orders.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -108,6 +108,11 @@ class OrdersFragment : Fragment(), OrdersAdapter.ClickListener, ActivityFragment
 
     override fun iconLeftToShow(): IconLeftTypeActivity = IconLeftTypeActivity.HAMBURGUER
     override fun iconRightToShow(): IconRightTypeActivity = IconRightTypeActivity.NONE
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _viewBinding = null
+    }
 
     companion object {
         fun newInstance() = OrdersFragment()

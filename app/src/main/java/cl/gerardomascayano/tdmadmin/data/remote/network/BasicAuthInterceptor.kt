@@ -1,4 +1,4 @@
-package cl.gerardomascayano.tdmadmin.network
+package cl.gerardomascayano.tdmadmin.data.remote.network
 
 import okhttp3.Credentials
 import okhttp3.Interceptor

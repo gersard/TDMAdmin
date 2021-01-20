@@ -1,8 +1,8 @@
 package cl.gerardomascayano.tdmadmin.core.di
 
 import cl.gerardomascayano.tdmadmin.BuildConfig
-import cl.gerardomascayano.tdmadmin.network.ApiConstants
-import cl.gerardomascayano.tdmadmin.network.BasicAuthInterceptor
+import cl.gerardomascayano.tdmadmin.data.remote.network.ApiConstants
+import cl.gerardomascayano.tdmadmin.data.remote.network.BasicAuthInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

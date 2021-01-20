@@ -1,4 +1,4 @@
-package cl.gerardomascayano.tdmadmin.ui.orders
+package cl.gerardomascayano.tdmadmin.ui.orders.list
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel

@@ -1,4 +1,4 @@
-package cl.gerardomascayano.tdmadmin.network
+package cl.gerardomascayano.tdmadmin.data.remote.network
 
 object ApiConstants {
 
