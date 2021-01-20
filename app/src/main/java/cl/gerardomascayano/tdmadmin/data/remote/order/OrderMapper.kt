@@ -1,4 +1,4 @@
-package cl.gerardomascayano.tdmadmin.data.remote
+package cl.gerardomascayano.tdmadmin.data.remote.order
 
 import cl.gerardomascayano.tdmadmin.domain.order.Order
 import cl.gerardomascayano.tdmadmin.domain.order.OrderState
@@ -6,7 +6,7 @@ import cl.gerardomascayano.tdmadmin.domain.order.Product
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class OrderWrapper {
+class OrderMapper {
 
     // NETWORK -> DOMAIN
     fun ordersResponseToOrder(ordersResponse: List<OrderResponse>): List<Order> =

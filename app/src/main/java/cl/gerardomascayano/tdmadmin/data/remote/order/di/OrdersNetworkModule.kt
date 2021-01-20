@@ -1,8 +1,9 @@
-package cl.gerardomascayano.tdmadmin.data.remote.di
+package cl.gerardomascayano.tdmadmin.data.remote.order.di
 
-import cl.gerardomascayano.tdmadmin.data.remote.OrdersService
-import cl.gerardomascayano.tdmadmin.data.remote.OrderWrapper
-import cl.gerardomascayano.tdmadmin.data.remote.OrdersDataSource
+import cl.gerardomascayano.tdmadmin.data.remote.order.OrdersService
+import cl.gerardomascayano.tdmadmin.data.remote.order.OrderMapper
+import cl.gerardomascayano.tdmadmin.data.remote.order.OrdersDataSource
+import cl.gerardomascayano.tdmadmin.data.remote.order.note.OrderNoteMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,7 +19,10 @@ object OrdersNetworkModule {
         retrofit.create(OrdersService::class.java)
 
     @Provides
-    fun providesOrderWrapper(): OrderWrapper = OrderWrapper()
+    fun providesOrderMapper(): OrderMapper = OrderMapper()
+
+    @Provides
+    fun providesOrderNoteMapper(): OrderNoteMapper = OrderNoteMapper()
 
     @Provides
     fun providesOrderDataSource(orderService: OrdersService) = OrdersDataSource(orderService)

@@ -1,4 +1,4 @@
-package cl.gerardomascayano.tdmadmin.data.remote
+package cl.gerardomascayano.tdmadmin.data.remote.order
 
 object OrderConstant {
 

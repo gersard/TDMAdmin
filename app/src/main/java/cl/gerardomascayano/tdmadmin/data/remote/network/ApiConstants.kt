@@ -7,11 +7,12 @@ object ApiConstants {
 
     // METHOD'S
     const val METHOD_ORDERS = "orders"
+    const val METHOD_NOTES = "notes"
 
     // PARAM'S
     const val PARAM_PAGE = "page"
 
     // PAGING
-    const val DEFAULT_PAGE_SIZE = 10
+    const val DEFAULT_PAGE_SIZE = 15
 
 }

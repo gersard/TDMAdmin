@@ -1,6 +1,5 @@
 package cl.gerardomascayano.tdmadmin.core.di.orders
 
-import cl.gerardomascayano.tdmadmin.data.remote.OrdersDataSource
 import cl.gerardomascayano.tdmadmin.data.repository.OrdersRepository
 import cl.gerardomascayano.tdmadmin.data.repository.OrdersRepositoryImpl
 import cl.gerardomascayano.tdmadmin.domain.order.OrdersUseCase

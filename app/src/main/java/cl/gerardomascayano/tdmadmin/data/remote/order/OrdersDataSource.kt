@@ -1,10 +1,9 @@
-package cl.gerardomascayano.tdmadmin.data.remote
+package cl.gerardomascayano.tdmadmin.data.remote.order
 
 import androidx.paging.PagingSource
-import cl.gerardomascayano.tdmadmin.domain.order.Order
+import cl.gerardomascayano.tdmadmin.data.remote.order.note.OrderNoteResponse
 import retrofit2.HttpException
 import retrofit2.Response
-import timber.log.Timber
 import java.io.IOException
 import java.net.UnknownHostException
 import javax.inject.Inject
@@ -34,6 +33,18 @@ class OrdersDataSource @Inject constructor(
     suspend fun updateOrder(orderUpdate: OrderUpdate): OrderResponse? {
         return try {
             ordersService.updateOrder(orderUpdate.idOrder, orderUpdate)
+        } catch (exception: IOException) {
+            null
+        } catch (exception: HttpException) {
+            null
+        } catch (exception: UnknownHostException) {
+            null
+        }
+    }
+
+    suspend fun getOrderNotes(orderId: Int): Response<List<OrderNoteResponse>>? {
+        return try {
+            ordersService.getOrderNotes(orderId)
         } catch (exception: IOException) {
             null
         } catch (exception: HttpException) {

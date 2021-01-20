@@ -6,13 +6,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import cl.gerardomascayano.tdmadmin.R
+import cl.gerardomascayano.tdmadmin.core.extension.gone
 import cl.gerardomascayano.tdmadmin.core.extension.invisible
 import cl.gerardomascayano.tdmadmin.core.extension.visible
 import cl.gerardomascayano.tdmadmin.databinding.OrderNotesFragmentBinding
+import cl.gerardomascayano.tdmadmin.domain.order.note.OrderNote
+import cl.gerardomascayano.tdmadmin.domain.order.note.OrderNoteState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -23,6 +27,13 @@ class OrderNotesFragment : DialogFragment(), View.OnClickListener {
     private val viewModel = viewModels<OrderNotesViewModel>()
     private var _viewBinding: OrderNotesFragmentBinding? = null
     private val viewBinding get() = _viewBinding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            viewModel.value.orderId = it.getInt(ARG_ORDER_ID)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +48,7 @@ class OrderNotesFragment : DialogFragment(), View.OnClickListener {
         listeningViewState()
         viewBinding.btnAnadir.setOnClickListener(this)
         viewBinding.btnCancelar.setOnClickListener(this)
+        loadNotes()
     }
 
     private fun listeningViewState() {
@@ -75,7 +87,15 @@ class OrderNotesFragment : DialogFragment(), View.OnClickListener {
     }
 
     private fun loadNotes() {
-
+        viewLifecycleOwner.lifecycle.coroutineScope.launch {
+            viewModel.value.orderNoteState.collect { orderNoteState ->
+                when (orderNoteState) {
+                    is OrderNoteState.Loading -> if (orderNoteState.isLoading) viewBinding.pbLoading.visible() else viewBinding.pbLoading.gone()
+                    is OrderNoteState.Error -> Toast.makeText(requireContext(), orderNoteState.errorMessage, Toast.LENGTH_LONG).show()
+                    is OrderNoteState.Success<*> -> TODO()
+                }
+            }
+        }
     }
 
     private fun sendNote() {
