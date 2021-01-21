@@ -20,6 +20,11 @@ class OrderNotesAdapter : RecyclerView.Adapter<OrderNotesAdapter.OrderNoteViewHo
 
     override fun getItemCount(): Int = listNotes.size
 
+    fun addNoteList(notes: List<OrderNote>) {
+        listNotes.addAll(notes)
+        notifyItemRangeInserted(0, listNotes.size)
+    }
+
     fun addNewNote(note: OrderNote) {
         listNotes.add(0, note)
         notifyItemInserted(0)

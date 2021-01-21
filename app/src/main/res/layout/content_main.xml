@@ -10,7 +10,7 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/host_fragment"
         android:layout_width="match_parent"
-        android:name="cl.gerardomascayano.tdmadmin.ui.orders.OrdersFragment"
+        android:name="cl.gerardomascayano.tdmadmin.ui.orders.list.OrdersFragment"
         android:layout_height="match_parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

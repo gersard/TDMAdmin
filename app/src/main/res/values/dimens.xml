@@ -25,4 +25,9 @@
     <dimen name="margin_lateral_detail_product">8dp</dimen>
     <dimen name="margin_vertical_detail_product">0dp</dimen>
     <dimen name="divider_height_detail_product">1dp</dimen>
+
+<!--    LIST NOTES-->
+    <dimen name="margin_vertical_note">8dp</dimen>
+    <dimen name="margin_horizontal_note">8dp</dimen>
+    <dimen name="corner_radius_medium">8dp</dimen>
 </resources>

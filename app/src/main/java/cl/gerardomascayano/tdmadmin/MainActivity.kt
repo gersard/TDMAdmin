@@ -10,7 +10,9 @@ import cl.gerardomascayano.tdmadmin.core.ui.ActivityFragmentContract
 import cl.gerardomascayano.tdmadmin.core.ui.IconLeftTypeActivity
 import cl.gerardomascayano.tdmadmin.core.ui.IconRightTypeActivity
 import cl.gerardomascayano.tdmadmin.databinding.ActivityMainBinding
+import cl.gerardomascayano.tdmadmin.ui.orders.detail.DetailOrderFragment
 import cl.gerardomascayano.tdmadmin.ui.orders.list.OrdersFragment
+import cl.gerardomascayano.tdmadmin.ui.orders.note.OrderNotesFragment
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -45,7 +47,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             when (rightIconState) {
                 IconRightTypeActivity.NONE -> Unit
                 IconRightTypeActivity.NOTE -> {
-                    //TODO Mostrar dialog ordenes note's
+                    val currentFragment = supportFragmentManager.findFragmentByTag(DetailOrderFragment::class.java.simpleName) as DetailOrderFragment
+                    currentFragment.showOrderNotesDialog()
                 }
             }
         }
@@ -84,7 +87,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val transaction = supportFragmentManager.beginTransaction()
         if (addToBackStack) transaction.addToBackStack(null)
         transaction
-            .replace(R.id.host_fragment, fragment)
+            .replace(R.id.host_fragment, fragment, fragment::class.java.simpleName)
             .commit()
     }
 
@@ -98,7 +101,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun manageRightIconActivity(iconRightIcon: IconRightTypeActivity) {
         if (this.rightIconState != iconRightIcon) {
             this.rightIconState = iconRightIcon
-            binding.appBarMainInclude.ibRightAction.setImageDrawable(ContextCompat.getDrawable(this, iconRightIcon.drwRes!!))
+            binding.appBarMainInclude.ibRightAction.setImageDrawable(
+                if (rightIconState.drwRes != null) ContextCompat.getDrawable(
+                    this,
+                    iconRightIcon.drwRes!!
+                ) else null
+            )
         }
     }
 

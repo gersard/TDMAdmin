@@ -28,6 +28,7 @@ import cl.gerardomascayano.tdmadmin.ui.orders.list.OrdersViewModel
 import cl.gerardomascayano.tdmadmin.ui.orders.detail.adapter.ContentTextAdapter
 import cl.gerardomascayano.tdmadmin.ui.orders.detail.adapter.HeaderOrderStateAdapter
 import cl.gerardomascayano.tdmadmin.ui.orders.detail.adapter.HeaderTextAdapter
+import cl.gerardomascayano.tdmadmin.ui.orders.note.OrderNotesFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -105,6 +106,10 @@ class DetailOrderFragment : Fragment(), ActivityFragmentContract, OnClickListene
             )
         )
         viewBinding.rvDetailOrder.adapter = concatOrderDetailAdapters
+    }
+
+    fun showOrderNotesDialog() {
+        OrderNotesFragment.newInstance(viewModel.value.orderId).show(requireActivity().supportFragmentManager, "")
     }
 
 
