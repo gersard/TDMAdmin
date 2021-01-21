@@ -21,5 +21,9 @@ class OrdersUseCaseImpl @Inject constructor(private val repo: OrdersRepository) 
         return repo.getOrderNotes(orderId)
     }
 
+    override suspend fun createOrderNote(orderId: Int, note: String, customerNote: Boolean): GenericState {
+        return repo.createOrderNote(orderId, note, customerNote)
+    }
+
 
 }

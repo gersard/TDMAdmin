@@ -13,12 +13,14 @@ import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import cl.gerardomascayano.tdmadmin.R
+import cl.gerardomascayano.tdmadmin.core.GenericState
 import cl.gerardomascayano.tdmadmin.core.extension.gone
 import cl.gerardomascayano.tdmadmin.core.extension.invisible
 import cl.gerardomascayano.tdmadmin.core.extension.visible
 import cl.gerardomascayano.tdmadmin.core.ui.MarginItemDecorator
 import cl.gerardomascayano.tdmadmin.core.ui.ScreenSize
 import cl.gerardomascayano.tdmadmin.databinding.OrderNotesFragmentBinding
+import cl.gerardomascayano.tdmadmin.domain.order.note.OrderNote
 import cl.gerardomascayano.tdmadmin.domain.order.note.OrderNoteState
 import cl.gerardomascayano.tdmadmin.domain.order.note.OrderNoteType
 import dagger.hilt.android.AndroidEntryPoint
@@ -131,7 +133,39 @@ class OrderNotesFragment : DialogFragment(), View.OnClickListener {
     }
 
     private fun sendNote() {
+        observeCreateNoteState()
+        viewModel.value.createOrder(
+            viewBinding.etOrderNote.text.toString(),
+            viewBinding.spnOrderType.selectedItem.toString() == OrderNoteType.CLIENTE.description
+        )
+    }
 
+    private fun observeCreateNoteState() {
+        if (!viewModel.value.createNoteState.hasActiveObservers()) {
+            viewModel.value.createNoteState.observe(viewLifecycleOwner) { state ->
+                when (state) {
+                    is GenericState.Loading -> {
+                        if (state.isLoading) {
+                            viewBinding.pbLoading.visible()
+                            viewBinding.groupAddNote.gone()
+                        } else {
+                            viewBinding.pbLoading.gone()
+                        }
+                    }
+                    is GenericState.Error -> {
+                        viewBinding.groupAddNote.visible()
+                        Toast.makeText(requireContext(), state.errorMessage, Toast.LENGTH_LONG).show()
+                    }
+                    is GenericState.Success<*> -> {
+                        val noteCreated = state.data as OrderNote
+                        viewModel.value.toggleViewState()
+                        notesAdapter.addNewNote(noteCreated)
+                        viewBinding.rvOrderNotes.scrollToPosition(0)
+                        Toast.makeText(requireContext(), "Se ha creado tu nota exitosamente", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+        }
     }
 
     companion object {

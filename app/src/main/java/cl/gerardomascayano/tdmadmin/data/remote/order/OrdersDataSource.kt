@@ -1,6 +1,7 @@
 package cl.gerardomascayano.tdmadmin.data.remote.order
 
 import androidx.paging.PagingSource
+import cl.gerardomascayano.tdmadmin.data.remote.order.note.OrderNoteCreate
 import cl.gerardomascayano.tdmadmin.data.remote.order.note.OrderNoteResponse
 import retrofit2.HttpException
 import retrofit2.Response
@@ -45,6 +46,18 @@ class OrdersDataSource @Inject constructor(
     suspend fun getOrderNotes(orderId: Int): Response<List<OrderNoteResponse>>? {
         return try {
             ordersService.getOrderNotes(orderId)
+        } catch (exception: IOException) {
+            null
+        } catch (exception: HttpException) {
+            null
+        } catch (exception: UnknownHostException) {
+            null
+        }
+    }
+
+    suspend fun createOrderNote(orderId: Int, orderNote: OrderNoteCreate): Response<OrderNoteResponse>? {
+        return try {
+            ordersService.createOrderNote(orderId, orderNote)
         } catch (exception: IOException) {
             null
         } catch (exception: HttpException) {

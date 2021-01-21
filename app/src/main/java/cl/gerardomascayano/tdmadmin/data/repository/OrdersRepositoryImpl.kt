@@ -10,6 +10,7 @@ import cl.gerardomascayano.tdmadmin.data.remote.order.OrderMapper
 import cl.gerardomascayano.tdmadmin.data.remote.order.OrdersDataSource
 import cl.gerardomascayano.tdmadmin.domain.order.Order
 import cl.gerardomascayano.tdmadmin.data.remote.network.ApiConstants
+import cl.gerardomascayano.tdmadmin.data.remote.order.note.OrderNoteCreate
 import cl.gerardomascayano.tdmadmin.data.remote.order.note.OrderNoteMapper
 import cl.gerardomascayano.tdmadmin.domain.order.note.OrderNoteState
 import kotlinx.coroutines.flow.Flow
@@ -46,6 +47,17 @@ class OrdersRepositoryImpl @Inject constructor(
             else OrderNoteState.Error("Ha ocurrido un error inesperado")
         } else {
             OrderNoteState.Error("Ha ocurrido un error. Comprueba tu conexión y vuelve a intentar")
+        }
+    }
+
+    override suspend fun createOrderNote(orderId: Int, note: String, customerNote: Boolean): GenericState {
+        val response = remoteDataSource.createOrderNote(orderId, OrderNoteCreate(note, customerNote))
+        return if (response?.isSuccessful == true) {
+            if (response.body() != null) {
+                GenericState.Success(orderNoteMapper.orderNoteResponseToOrderNoteDomain(response.body()!!))
+            } else GenericState.Error("Ha ocurrido un error inesperado")
+        } else {
+            GenericState.Error("Ha ocurrido un error. Comprueba tu conexión y vuelve a intentar")
         }
     }
 

@@ -1,8 +1,11 @@
 package cl.gerardomascayano.tdmadmin.ui.orders.note
 
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import cl.gerardomascayano.tdmadmin.core.GenericState
 import cl.gerardomascayano.tdmadmin.domain.order.OrdersUseCase
 import cl.gerardomascayano.tdmadmin.domain.order.note.OrderNote
 import cl.gerardomascayano.tdmadmin.domain.order.note.OrderNoteState
@@ -22,6 +25,10 @@ class OrderNotesViewModel @ViewModelInject constructor(private val useCase: Orde
     val orderNoteState: StateFlow<OrderNoteState>
         get() = _orderNoteState
 
+    private var _createNoteState = MutableLiveData<GenericState>()
+    val createNoteState: LiveData<GenericState>
+        get() = _createNoteState
+
     fun toggleViewState() {
         _viewState.value = if (_viewState.value == OrderNoteViewState.LIST) OrderNoteViewState.ADD else OrderNoteViewState.LIST
     }
@@ -39,6 +46,14 @@ class OrderNotesViewModel @ViewModelInject constructor(private val useCase: Orde
             _orderNoteState.value = OrderNoteState.Loading(true)
             _orderNoteState.value = useCase.getOrderNotes(orderId)
             _orderNoteState.value = OrderNoteState.Loading(false)
+        }
+    }
+
+    fun createOrder(note: String, customerNote: Boolean) {
+        viewModelScope.launch {
+            _createNoteState.value = GenericState.Loading(true)
+            _createNoteState.value = useCase.createOrderNote(orderId, note, customerNote)
+            _createNoteState.value = GenericState.Loading(false)
         }
     }
 }
