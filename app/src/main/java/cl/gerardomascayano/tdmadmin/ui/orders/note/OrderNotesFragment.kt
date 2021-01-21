@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
@@ -19,6 +20,7 @@ import cl.gerardomascayano.tdmadmin.core.ui.MarginItemDecorator
 import cl.gerardomascayano.tdmadmin.core.ui.ScreenSize
 import cl.gerardomascayano.tdmadmin.databinding.OrderNotesFragmentBinding
 import cl.gerardomascayano.tdmadmin.domain.order.note.OrderNoteState
+import cl.gerardomascayano.tdmadmin.domain.order.note.OrderNoteType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -53,11 +55,18 @@ class OrderNotesFragment : DialogFragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         configureRv()
+        configureSpn()
         listeningViewState()
         viewBinding.tvTitle.text = "Notas del pedido: #${viewModel.value.orderId}"
         viewBinding.btnAnadir.setOnClickListener(this)
         viewBinding.btnCancelar.setOnClickListener(this)
         loadNotes()
+    }
+
+    private fun configureSpn() {
+        val spnAdapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, OrderNoteType.values().map { it.description })
+        spnAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+        viewBinding.spnOrderType.adapter = spnAdapter
     }
 
     private fun configureRv() {
