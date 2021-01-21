@@ -35,7 +35,7 @@ class OrderNotesAdapter : RecyclerView.Adapter<OrderNotesAdapter.OrderNoteViewHo
         fun bindNote(note: OrderNote) {
             viewBinding.tvNoteType.text = note.noteType.description
             viewBinding.tvNote.text = note.note
-            viewBinding.tvNoteDateCreated.text = note.dateCreated.format(OrderDateUtil.PATTERN_ORDER_DATE_CREATED_LIST)
+            viewBinding.tvNoteDateCreated.text = note.dateCreated.format(OrderDateUtil.PATTERN_ORDER_NOTE_DATE_CREATED)
         }
     }
 

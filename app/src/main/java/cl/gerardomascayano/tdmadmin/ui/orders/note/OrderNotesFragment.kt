@@ -1,12 +1,9 @@
 package cl.gerardomascayano.tdmadmin.ui.orders.note
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
@@ -21,7 +18,6 @@ import cl.gerardomascayano.tdmadmin.core.extension.visible
 import cl.gerardomascayano.tdmadmin.core.ui.MarginItemDecorator
 import cl.gerardomascayano.tdmadmin.core.ui.ScreenSize
 import cl.gerardomascayano.tdmadmin.databinding.OrderNotesFragmentBinding
-import cl.gerardomascayano.tdmadmin.domain.order.note.OrderNote
 import cl.gerardomascayano.tdmadmin.domain.order.note.OrderNoteState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -37,19 +33,14 @@ class OrderNotesFragment : DialogFragment(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            viewModel.value.orderId = it.getInt(ARG_ORDER_ID)
-        }
+        arguments?.let { viewModel.value.orderId = it.getInt(ARG_ORDER_ID) }
     }
 
     override fun onStart() {
         super.onStart()
-//        setStyle(STYLE_NO_FRAME, 0)
         val (width, height) = ScreenSize.get(requireActivity())
         dialog?.window?.setLayout((width * 0.9).toInt(), (height * 0.8).toInt())
         dialog?.window?.setBackgroundDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.bg_corner_radius_medium))
-
     }
 
     override fun onCreateView(
