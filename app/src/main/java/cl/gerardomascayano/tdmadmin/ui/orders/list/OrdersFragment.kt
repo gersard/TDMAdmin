@@ -26,6 +26,7 @@ import cl.gerardomascayano.tdmadmin.ui.orders.detail.DetailOrderFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class OrdersFragment : Fragment(), OrdersAdapter.ClickListener, ActivityFragmentContract {
@@ -66,8 +67,11 @@ class OrdersFragment : Fragment(), OrdersAdapter.ClickListener, ActivityFragment
                     viewBinding.srlOrders.isRefreshing = false
                     if (state.refresh.endOfPaginationReached && ordersAdapter.itemCount < 1) emptyOrders()
                 }
-                is LoadState.Error -> Toast.makeText(requireContext(), "ERROR ${(state.refresh as LoadState.Error).error.localizedMessage}", Toast.LENGTH_LONG)
-                    .show()
+                is LoadState.Error -> {
+                    viewBinding.srlOrders.post { viewBinding.srlOrders.isRefreshing = false }
+                    Toast.makeText(requireContext(), "Ha ocurrido un error. Comprueba tu conexión y vuelve a intentar", Toast.LENGTH_LONG)
+                        .show()
+                }
             }
         }
     }
@@ -78,7 +82,6 @@ class OrdersFragment : Fragment(), OrdersAdapter.ClickListener, ActivityFragment
                 .collectLatest {
                     ordersAdapter.submitData(it)
                 }
-
         }
     }
 

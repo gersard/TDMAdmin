@@ -15,8 +15,8 @@ class OrdersDataSource @Inject constructor(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, OrderResponse> {
         val page = params.key ?: 1
-        val response = ordersService.getOrders(page)
         return try {
+            val response = ordersService.getOrders(page)
             LoadResult.Page(
                 response.body()!!,
                 if (page == 1) null else page - 1,

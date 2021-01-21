@@ -22,7 +22,12 @@ class OrdersUseCaseImpl @Inject constructor(private val repo: OrdersRepository) 
     }
 
     override suspend fun createOrderNote(orderId: Int, note: String, customerNote: Boolean): GenericState {
-        return repo.createOrderNote(orderId, note, customerNote)
+        return if (note.isNotEmpty()) {
+            repo.createOrderNote(orderId, note, customerNote)
+        } else {
+            GenericState.Error("Debes escribir el contenido de la nota")
+        }
+
     }
 
 
