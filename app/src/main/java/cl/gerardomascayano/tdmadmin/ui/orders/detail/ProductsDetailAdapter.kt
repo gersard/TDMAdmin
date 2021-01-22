@@ -25,7 +25,7 @@ class ProductsDetailAdapter(private val products: List<Product>) : RecyclerView.
         fun bindProduct(product: Product) {
             with(viewBinding.root.context) {
                 viewBinding.tvDescription.text = getString(R.string.product_detail_description, product.name)
-                viewBinding.tvSku.text = getString(R.string.product_detail_sku, product.sku)
+                viewBinding.tvSku.text = getString(R.string.product_detail_sku, product.sku ?: "---")
                 viewBinding.tvQuantity.text = getString(R.string.product_detail_quantity, product.quantity)
                 viewBinding.tvUnitPrice.text = getString(R.string.product_detail_unit_price, product.price)
             }

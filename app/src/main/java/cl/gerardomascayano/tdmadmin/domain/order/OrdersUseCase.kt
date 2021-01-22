@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface OrdersUseCase {
 
-    fun getOrders(): Flow<PagingData<Order>>
+    fun getOrders(filterText: String): Flow<PagingData<Order>>
     suspend fun updateStatus(orderId: Int, status: String): GenericState
     suspend fun getOrderNotes(orderId: Int): OrderNoteState
     suspend fun createOrderNote(orderId: Int, note: String, customerNote: Boolean): GenericState

@@ -11,6 +11,7 @@ object ApiConstants {
 
     // PARAM'S
     const val PARAM_PAGE = "page"
+    const val PARAM_SEARCH = "search"
 
     // PAGING
     const val DEFAULT_PAGE_SIZE = 15

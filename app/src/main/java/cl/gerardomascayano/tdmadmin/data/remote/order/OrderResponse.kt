@@ -81,7 +81,7 @@ data class OrderResponse(
         @SerializedName("total")
         val total: Int,
         @SerializedName("sku")
-        val sku: String,
+        val sku: String?,
         @SerializedName("price")
         val price: Int
     )

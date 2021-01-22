@@ -64,6 +64,7 @@
                     android:backgroundTint="@color/white"
                     android:hint="N° de orden o nombre/apellido"
                     android:imeOptions="actionSearch"
+                    android:inputType="text"
                     android:paddingStart="4dp"
                     android:paddingTop="2dp"
                     android:paddingEnd="4dp"

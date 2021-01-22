@@ -9,8 +9,8 @@ import javax.inject.Inject
 
 class OrdersUseCaseImpl @Inject constructor(private val repo: OrdersRepository) : OrdersUseCase {
 
-    override fun getOrders(): Flow<PagingData<Order>> {
-        return repo.getOrders()
+    override fun getOrders(filterText: String): Flow<PagingData<Order>> {
+        return repo.getOrders(filterText)
     }
 
     override suspend fun updateStatus(orderId: Int, status: String): GenericState {

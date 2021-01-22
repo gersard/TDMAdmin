@@ -15,10 +15,11 @@ import timber.log.Timber
 class OrdersViewModel @ViewModelInject constructor(private val useCase: OrdersUseCase) : ViewModel() {
 
     var orders: Flow<PagingData<Order>>? = null
+    var currentFilterText: String = ""
 
     fun fetchOrders(): Flow<PagingData<Order>> {
         if (orders == null) {
-            orders = useCase.getOrders()
+            orders = useCase.getOrders(currentFilterText)
                 .cachedIn(viewModelScope)
         }
         return orders!!

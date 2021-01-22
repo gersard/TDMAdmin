@@ -9,6 +9,6 @@ data class Product(
     val name: String,
     val productId: Int,
     val quantity: Int,
-    val sku: String,
+    val sku: String?,
     val price: Int
 ) : Parcelable

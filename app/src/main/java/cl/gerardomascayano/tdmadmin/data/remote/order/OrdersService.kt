@@ -10,7 +10,7 @@ interface OrdersService {
 
 
     @GET(ApiConstants.METHOD_ORDERS)
-    suspend fun getOrders(@Query(ApiConstants.PARAM_PAGE) page: Int): Response<List<OrderResponse>>
+    suspend fun getOrders(@Query(ApiConstants.PARAM_PAGE) page: Int, @Query(ApiConstants.PARAM_SEARCH) filterText: String): Response<List<OrderResponse>>
 
     @PUT("${ApiConstants.METHOD_ORDERS}/{id}")
     suspend fun updateOrder(@Path("id") id: Int, @Body orderUpdate: OrderUpdate): OrderResponse?

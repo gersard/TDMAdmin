@@ -1,7 +1,10 @@
 package cl.gerardomascayano.tdmadmin
 
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.MenuItem
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
@@ -21,7 +24,7 @@ import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, TextView.OnEditorActionListener {
 
     lateinit var binding: ActivityMainBinding
     private var leftIconState = IconLeftTypeActivity.HAMBURGUER
@@ -32,9 +35,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.appBarMainInclude.toolbar)
+        binding.navView.setCheckedItem(R.id.menu_orders)
         binding.navView.setNavigationItemSelectedListener(this)
         binding.appBarMainInclude.toolbar.setNavigationOnClickListener { onBackPressed() }
-
+        binding.appBarMainInclude.etSearchOrder.setOnEditorActionListener(this)
         listeningFragmentStack()
         listeningNavigationButton()
     }
@@ -60,10 +64,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun buttonClosePressed(pressedByUser: Boolean) {
         manageRightIconActivity(IconRightTypeActivity.SEARCH)
         binding.appBarMainInclude.tvTitle.visible()
-        binding.appBarMainInclude.etSearchOrder.clearFocus()
         binding.appBarMainInclude.etSearchOrder.gone()
         binding.appBarMainInclude.etSearchOrder.hideKeyboard()
-        if (pressedByUser) binding.appBarMainInclude.etSearchOrder.setText("")
+        if (pressedByUser) {
+            binding.appBarMainInclude.etSearchOrder.setText("")
+            executeOrdersFilter(binding.appBarMainInclude.etSearchOrder.text.toString())
+        }
     }
 
     private fun buttonSearchPressed() {
@@ -150,9 +156,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    private fun executeOrdersFilter(filterText: String) {
+        val orderFragment = supportFragmentManager.findFragmentByTag(OrdersFragment::class.java.simpleName) as OrdersFragment
+        orderFragment.filterOrders(filterText)
+    }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         displayFragment(item.itemId)
         return true
+    }
+
+    override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            // Ejecutar búsqueda
+            executeOrdersFilter(v?.text.toString())
+            binding.appBarMainInclude.etSearchOrder.hideKeyboard()
+            return true
+        }
+
+        return false
     }
 
 }

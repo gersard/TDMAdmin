@@ -13,10 +13,13 @@ class OrdersDataSource @Inject constructor(
     private val ordersService: OrdersService
 ) : PagingSource<Int, OrderResponse>() {
 
+    //TODO TEMPORAL !!!!!!
+    var currentFilterText = ""
+
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, OrderResponse> {
         val page = params.key ?: 1
         return try {
-            val response = ordersService.getOrders(page)
+            val response = ordersService.getOrders(page, currentFilterText)
             LoadResult.Page(
                 response.body()!!,
                 if (page == 1) null else page - 1,

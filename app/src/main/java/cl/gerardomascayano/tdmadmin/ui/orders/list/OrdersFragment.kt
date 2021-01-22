@@ -102,6 +102,12 @@ class OrdersFragment : Fragment(), OrdersAdapter.ClickListener, ActivityFragment
         ordersAdapter = OrdersAdapter(this)
     }
 
+    fun filterOrders(text: String) {
+        ordersViewModel.value.currentFilterText = text
+        ordersViewModel.value.invalidateData()
+        fetchOrders()
+    }
+
     override fun onOrderClickListener(order: Order) {
         (activity as? MainActivity)?.replaceFragment(DetailOrderFragment.newInstance(order), true, AnimationType.SLIDE)
     }

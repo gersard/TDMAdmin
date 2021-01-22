@@ -23,8 +23,9 @@ class OrdersRepositoryImpl @Inject constructor(
     private val orderNoteMapper: OrderNoteMapper
 ) : OrdersRepository {
 
-
-    override fun getOrders(): Flow<PagingData<Order>> {
+    override fun getOrders(filterText: String): Flow<PagingData<Order>> {
+        //TODO TEMPORAL !!!
+        remoteDataSource.currentFilterText = filterText
         return Pager(
             config = getDefaultPageConfig(),
             pagingSourceFactory = { remoteDataSource }
