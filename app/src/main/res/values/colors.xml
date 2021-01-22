@@ -28,4 +28,6 @@
     <color name="btn_green">#0B840B</color>
     <color name="btn_red_enabled">#8A0000</color>
 
+<!--    EDIT TEXTS-->
+    <color name="hint_et">#AFAEAE</color>
 </resources>

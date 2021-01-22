@@ -21,13 +21,14 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical"
+                android:animateLayoutChanges="true"
                 android:orientation="horizontal">
 
                 <ImageButton
                     android:id="@+id/ib_left_action"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
+                    android:layout_centerVertical="true"
                     android:backgroundTint="@color/transparent"
                     android:contentDescription="@string/navigation_button"
                     android:padding="2dp"
@@ -38,6 +39,7 @@
                     android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_toStartOf="@id/ib_right_action"
@@ -45,17 +47,44 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     tools:text="TDM ADMIN" />
 
+                <EditText
+                    android:id="@+id/et_search_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toStartOf="@id/ib_right_action"
+                    android:layout_toEndOf="@id/ib_left_action"
+                    android:background="@drawable/bg_et_border"
+                    android:backgroundTint="@color/white"
+                    android:hint="N° de orden o nombre/apellido"
+                    android:imeOptions="actionSearch"
+                    android:paddingStart="4dp"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="4dp"
+                    android:paddingBottom="2dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint_et"
+                    android:textSize="15sp"
+                    android:visibility="gone" />
+
                 <ImageButton
                     android:id="@+id/ib_right_action"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginEnd="16dp"
                     android:backgroundTint="@color/transparent"
                     android:contentDescription="@string/navigation_button"
                     android:padding="2dp"
                     android:scaleType="fitCenter"
-                    tools:src="@drawable/ic_note" />
+                    android:src="@drawable/ic_search" />
 
             </RelativeLayout>
 

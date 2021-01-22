@@ -6,6 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import cl.gerardomascayano.tdmadmin.core.extension.gone
+import cl.gerardomascayano.tdmadmin.core.extension.hideKeyboard
+import cl.gerardomascayano.tdmadmin.core.extension.showKeyboard
+import cl.gerardomascayano.tdmadmin.core.extension.visible
 import cl.gerardomascayano.tdmadmin.core.ui.ActivityFragmentContract
 import cl.gerardomascayano.tdmadmin.core.ui.AnimationType
 import cl.gerardomascayano.tdmadmin.core.ui.IconLeftTypeActivity
@@ -21,7 +25,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     lateinit var binding: ActivityMainBinding
     private var leftIconState = IconLeftTypeActivity.HAMBURGUER
-    private var rightIconState = IconRightTypeActivity.NONE
+    private var rightIconState = IconRightTypeActivity.SEARCH
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,12 +50,32 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding.appBarMainInclude.ibRightAction.setOnClickListener {
             when (rightIconState) {
                 IconRightTypeActivity.NONE -> Unit
-                IconRightTypeActivity.NOTE -> {
-                    val currentFragment = supportFragmentManager.findFragmentByTag(DetailOrderFragment::class.java.simpleName) as DetailOrderFragment
-                    currentFragment.showOrderNotesDialog()
-                }
+                IconRightTypeActivity.NOTE -> buttonNotePressed()
+                IconRightTypeActivity.SEARCH -> buttonSearchPressed()
+                IconRightTypeActivity.CLOSE -> buttonClosePressed(true)
             }
         }
+    }
+
+    private fun buttonClosePressed(pressedByUser: Boolean) {
+        manageRightIconActivity(IconRightTypeActivity.SEARCH)
+        binding.appBarMainInclude.tvTitle.visible()
+        binding.appBarMainInclude.etSearchOrder.clearFocus()
+        binding.appBarMainInclude.etSearchOrder.gone()
+        binding.appBarMainInclude.etSearchOrder.hideKeyboard()
+        if (pressedByUser) binding.appBarMainInclude.etSearchOrder.setText("")
+    }
+
+    private fun buttonSearchPressed() {
+        manageRightIconActivity(IconRightTypeActivity.CLOSE)
+        binding.appBarMainInclude.tvTitle.gone()
+        binding.appBarMainInclude.etSearchOrder.visible()
+        binding.appBarMainInclude.etSearchOrder.showKeyboard()
+    }
+
+    private fun buttonNotePressed() {
+        val currentFragment = supportFragmentManager.findFragmentByTag(DetailOrderFragment::class.java.simpleName) as DetailOrderFragment
+        currentFragment.showOrderNotesDialog()
     }
 
     private fun listeningFragmentStack() {
@@ -84,6 +108,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun replaceFragment(fragment: Fragment, addToBackStack: Boolean = true, animate: AnimationType? = null) {
+        if (rightIconState == IconRightTypeActivity.CLOSE) {
+            manageRightIconActivity(IconRightTypeActivity.SEARCH)
+            buttonClosePressed(false)
+        }
         val transaction = supportFragmentManager.beginTransaction()
         if (addToBackStack) transaction.addToBackStack(null)
         if (animate != null) {

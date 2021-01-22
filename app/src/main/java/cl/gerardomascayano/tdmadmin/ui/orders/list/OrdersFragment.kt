@@ -107,7 +107,7 @@ class OrdersFragment : Fragment(), OrdersAdapter.ClickListener, ActivityFragment
     }
 
     override fun iconLeftToShow(): IconLeftTypeActivity = IconLeftTypeActivity.HAMBURGUER
-    override fun iconRightToShow(): IconRightTypeActivity = IconRightTypeActivity.NONE
+    override fun iconRightToShow(): IconRightTypeActivity = IconRightTypeActivity.SEARCH
 
     override fun onDestroyView() {
         super.onDestroyView()
