@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             when (rightIconState) {
                 IconRightTypeActivity.NONE -> Unit
                 IconRightTypeActivity.NOTE -> buttonNotePressed()
-                IconRightTypeActivity.SEARCH -> buttonSearchPressed()
+                IconRightTypeActivity.SEARCH -> buttonSearchPressed(true)
                 IconRightTypeActivity.CLOSE -> buttonClosePressed(true)
             }
         }
@@ -72,11 +72,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    private fun buttonSearchPressed() {
+    private fun buttonSearchPressed(pressedByUser: Boolean) {
         manageRightIconActivity(IconRightTypeActivity.CLOSE)
         binding.appBarMainInclude.tvTitle.gone()
         binding.appBarMainInclude.etSearchOrder.visible()
-        binding.appBarMainInclude.etSearchOrder.showKeyboard()
+        if (pressedByUser) binding.appBarMainInclude.etSearchOrder.showKeyboard()
     }
 
     private fun buttonNotePressed() {
@@ -89,6 +89,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val contract = supportFragmentManager.findFragmentById(R.id.host_fragment) as ActivityFragmentContract
             manageLeftIconActivity(contract.iconLeftToShow())
             manageRightIconActivity(contract.iconRightToShow())
+            validateIcon()
         }
     }
 
@@ -97,16 +98,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun displayFragment(menuId: Int) {
-
         val fragment: Fragment? = when (menuId) {
             R.id.menu_orders -> OrdersFragment.newInstance()
             else -> null
         }
 
         fragment?.let {
-
             replaceFragment(it, false)
-
             if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 binding.drawerLayout.closeDrawer(GravityCompat.START, true)
             }
@@ -114,10 +112,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun replaceFragment(fragment: Fragment, addToBackStack: Boolean = true, animate: AnimationType? = null) {
-        if (rightIconState == IconRightTypeActivity.CLOSE) {
-            manageRightIconActivity(IconRightTypeActivity.SEARCH)
-            buttonClosePressed(false)
-        }
+        validateIcon()
         val transaction = supportFragmentManager.beginTransaction()
         if (addToBackStack) transaction.addToBackStack(null)
         if (animate != null) {
@@ -135,6 +130,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         transaction
             .replace(R.id.host_fragment, fragment, fragment::class.java.simpleName)
             .commit()
+    }
+
+    private fun validateIcon() {
+        when (rightIconState) {
+            IconRightTypeActivity.CLOSE -> {
+                manageRightIconActivity(IconRightTypeActivity.SEARCH)
+                buttonClosePressed(false)
+            }
+            IconRightTypeActivity.SEARCH -> {
+                if (binding.appBarMainInclude.etSearchOrder.text.toString().isNotEmpty()) {
+                    buttonSearchPressed(false)
+                }
+            }
+            IconRightTypeActivity.NONE -> Unit
+            IconRightTypeActivity.NOTE -> Unit
+        }
     }
 
     private fun manageLeftIconActivity(iconLeftType: IconLeftTypeActivity) {

@@ -13,11 +13,14 @@ import cl.gerardomascayano.tdmadmin.domain.order.Product
 import cl.gerardomascayano.tdmadmin.domain.order.detail.HeaderOrderText
 import cl.gerardomascayano.tdmadmin.domain.order.detail.OrderContentTextDetail
 import cl.gerardomascayano.tdmadmin.domain.order.detail.OrderDateState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class DetailOrderViewModel @ViewModelInject constructor(private val useCase: OrdersUseCase) : ViewModel() {
+@HiltViewModel
+class DetailOrderViewModel @Inject constructor(private val useCase: OrdersUseCase) : ViewModel() {
 
     fun generateData(order: Order) {
         orderId = order.id

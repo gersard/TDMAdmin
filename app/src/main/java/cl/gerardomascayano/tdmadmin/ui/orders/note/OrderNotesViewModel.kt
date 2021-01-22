@@ -9,11 +9,14 @@ import cl.gerardomascayano.tdmadmin.core.GenericState
 import cl.gerardomascayano.tdmadmin.domain.order.OrdersUseCase
 import cl.gerardomascayano.tdmadmin.domain.order.note.OrderNote
 import cl.gerardomascayano.tdmadmin.domain.order.note.OrderNoteState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class OrderNotesViewModel @ViewModelInject constructor(private val useCase: OrdersUseCase) : ViewModel() {
+@HiltViewModel
+class OrderNotesViewModel @Inject constructor(private val useCase: OrdersUseCase) : ViewModel() {
 
     var orderId: Int = 0
 
