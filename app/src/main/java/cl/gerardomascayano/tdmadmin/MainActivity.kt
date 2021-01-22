@@ -7,12 +7,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import cl.gerardomascayano.tdmadmin.core.ui.ActivityFragmentContract
+import cl.gerardomascayano.tdmadmin.core.ui.AnimationType
 import cl.gerardomascayano.tdmadmin.core.ui.IconLeftTypeActivity
 import cl.gerardomascayano.tdmadmin.core.ui.IconRightTypeActivity
 import cl.gerardomascayano.tdmadmin.databinding.ActivityMainBinding
 import cl.gerardomascayano.tdmadmin.ui.orders.detail.DetailOrderFragment
 import cl.gerardomascayano.tdmadmin.ui.orders.list.OrdersFragment
-import cl.gerardomascayano.tdmadmin.ui.orders.note.OrderNotesFragment
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -83,9 +83,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    fun replaceFragment(fragment: Fragment, addToBackStack: Boolean = true) {
+    fun replaceFragment(fragment: Fragment, addToBackStack: Boolean = true, animate: AnimationType? = null) {
         val transaction = supportFragmentManager.beginTransaction()
         if (addToBackStack) transaction.addToBackStack(null)
+        if (animate != null) {
+            when (animate) {
+                AnimationType.FADE -> TODO()
+                AnimationType.SLIDE -> transaction.setCustomAnimations(
+                    R.anim.slide_in_right,
+                    R.anim.slide_out_left,
+                    R.anim.slide_in_left,
+                    R.anim.slide_out_right
+                )
+            }
+        }
+
         transaction
             .replace(R.id.host_fragment, fragment, fragment::class.java.simpleName)
             .commit()

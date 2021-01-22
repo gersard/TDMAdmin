@@ -14,10 +14,7 @@ import cl.gerardomascayano.tdmadmin.MainActivity
 import cl.gerardomascayano.tdmadmin.R
 import cl.gerardomascayano.tdmadmin.core.extension.invisible
 import cl.gerardomascayano.tdmadmin.core.extension.visible
-import cl.gerardomascayano.tdmadmin.core.ui.ActivityFragmentContract
-import cl.gerardomascayano.tdmadmin.core.ui.IconLeftTypeActivity
-import cl.gerardomascayano.tdmadmin.core.ui.IconRightTypeActivity
-import cl.gerardomascayano.tdmadmin.core.ui.MarginItemDecorator
+import cl.gerardomascayano.tdmadmin.core.ui.*
 import cl.gerardomascayano.tdmadmin.databinding.FragmentOrdersBinding
 import cl.gerardomascayano.tdmadmin.domain.order.Order
 import cl.gerardomascayano.tdmadmin.ui.orders.adapter.OrdersAdapter
@@ -106,7 +103,7 @@ class OrdersFragment : Fragment(), OrdersAdapter.ClickListener, ActivityFragment
     }
 
     override fun onOrderClickListener(order: Order) {
-        (activity as? MainActivity)?.replaceFragment(DetailOrderFragment.newInstance(order), true)
+        (activity as? MainActivity)?.replaceFragment(DetailOrderFragment.newInstance(order), true, AnimationType.SLIDE)
     }
 
     override fun iconLeftToShow(): IconLeftTypeActivity = IconLeftTypeActivity.HAMBURGUER
