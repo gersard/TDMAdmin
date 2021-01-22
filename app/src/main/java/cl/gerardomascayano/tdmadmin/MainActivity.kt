@@ -126,7 +126,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 )
             }
         }
-
+        this.hideKeyboard()
         transaction
             .replace(R.id.host_fragment, fragment, fragment::class.java.simpleName)
             .commit()
