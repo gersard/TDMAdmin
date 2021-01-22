@@ -19,7 +19,7 @@ import cl.gerardomascayano.tdmadmin.core.extension.invisible
 import cl.gerardomascayano.tdmadmin.core.extension.visible
 import cl.gerardomascayano.tdmadmin.core.ui.MarginItemDecorator
 import cl.gerardomascayano.tdmadmin.core.ui.ScreenSize
-import cl.gerardomascayano.tdmadmin.databinding.OrderNotesFragmentBinding
+import cl.gerardomascayano.tdmadmin.databinding.FragmentOrderNotesBinding
 import cl.gerardomascayano.tdmadmin.domain.order.note.OrderNote
 import cl.gerardomascayano.tdmadmin.domain.order.note.OrderNoteState
 import cl.gerardomascayano.tdmadmin.domain.order.note.OrderNoteType
@@ -31,7 +31,7 @@ import kotlinx.coroutines.launch
 class OrderNotesFragment : DialogFragment(), View.OnClickListener {
 
     private val viewModel = viewModels<OrderNotesViewModel>()
-    private var _viewBinding: OrderNotesFragmentBinding? = null
+    private var _viewBinding: FragmentOrderNotesBinding? = null
     private val viewBinding get() = _viewBinding!!
     private lateinit var notesAdapter: OrderNotesAdapter
 
@@ -50,7 +50,7 @@ class OrderNotesFragment : DialogFragment(), View.OnClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        _viewBinding = OrderNotesFragmentBinding.inflate(inflater, container, false)
+        _viewBinding = FragmentOrderNotesBinding.inflate(inflater, container, false)
         return viewBinding.root
     }
 

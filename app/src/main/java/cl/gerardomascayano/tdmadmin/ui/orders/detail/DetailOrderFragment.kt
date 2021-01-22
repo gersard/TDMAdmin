@@ -21,7 +21,7 @@ import cl.gerardomascayano.tdmadmin.core.extension.exhaustive
 import cl.gerardomascayano.tdmadmin.core.ui.ActivityFragmentContract
 import cl.gerardomascayano.tdmadmin.core.ui.IconLeftTypeActivity
 import cl.gerardomascayano.tdmadmin.core.ui.IconRightTypeActivity
-import cl.gerardomascayano.tdmadmin.databinding.DetailOrderFragmentBinding
+import cl.gerardomascayano.tdmadmin.databinding.FragmentDetailOrderBinding
 import cl.gerardomascayano.tdmadmin.domain.order.Order
 import cl.gerardomascayano.tdmadmin.domain.order.OrderState
 import cl.gerardomascayano.tdmadmin.ui.orders.list.OrdersViewModel
@@ -36,8 +36,8 @@ class DetailOrderFragment : Fragment(), ActivityFragmentContract, OnClickListene
 
     private val viewModel = viewModels<DetailOrderViewModel>()
     private val ordersViewModel = activityViewModels<OrdersViewModel>()
-    private var _viewBinding: DetailOrderFragmentBinding? = null
-    private val viewBinding: DetailOrderFragmentBinding
+    private var _viewBinding: FragmentDetailOrderBinding? = null
+    private val viewBinding: FragmentDetailOrderBinding
         get() = _viewBinding!!
     private lateinit var headerOrderStateAdapter: HeaderOrderStateAdapter
 
@@ -47,7 +47,7 @@ class DetailOrderFragment : Fragment(), ActivityFragmentContract, OnClickListene
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _viewBinding = DetailOrderFragmentBinding.inflate(inflater, container, false)
+        _viewBinding = FragmentDetailOrderBinding.inflate(inflater, container, false)
         return viewBinding.root
     }
 

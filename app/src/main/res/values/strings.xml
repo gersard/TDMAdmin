@@ -44,6 +44,9 @@
     <string name="fcm_topic_order">new_order</string>
     <string name="default_notification_channel_id">ordenes</string>
     <string name="navigation_button">Navigation button</string>
+    <string name="button_anadir_note">Añadir</string>
+    <string name="button_cancelar_note">Cancelar</string>
+    <string name="title_ingresa_nota">Ingresa tu nota:</string>
 
 
 </resources>

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="300dp"
-    android:animateLayoutChanges="true"
     android:orientation="vertical"
     tools:context=".ui.orders.note.OrderNotesFragment">
 
@@ -46,7 +45,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:insetBottom="0dp"
-        android:text="Cancelar"
+        android:text="@string/button_cancelar_note"
         app:backgroundTint="@color/btn_red_enabled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_anadir"
@@ -59,7 +58,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:insetBottom="0dp"
-        android:text="Añadir"
+        android:text="@string/button_anadir_note"
         app:backgroundTint="@color/btn_green"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -84,7 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Ingresa tu nota:"
+        android:text="@string/title_ingresa_nota"
         android:textStyle="italic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view" />
@@ -96,6 +95,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        android:autofillHints=""
         android:background="@drawable/bg_et_border"
         android:ems="10"
         android:gravity="top"
@@ -105,7 +105,8 @@
         app:layout_constraintBottom_toTopOf="@+id/spn_order_type"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tv_title_add_note"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title_add_note" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_add_note"
+        tools:ignore="LabelFor" />
 
     <Spinner
         android:id="@+id/spn_order_type"
