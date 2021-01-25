@@ -34,6 +34,18 @@ class OrdersDataSource @Inject constructor(
         }
     }
 
+    suspend fun getOrders(page: Int, filterText: String = ""): Response<List<OrderResponse>>? {
+        return try {
+            ordersService.getOrders(page, filterText)
+        } catch (exception: IOException) {
+            null
+        } catch (exception: HttpException) {
+            null
+        } catch (exception: UnknownHostException) {
+            null
+        }
+    }
+
     suspend fun updateOrder(orderUpdate: OrderUpdate): OrderResponse? {
         return try {
             ordersService.updateOrder(orderUpdate.idOrder, orderUpdate)

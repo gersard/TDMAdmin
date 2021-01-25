@@ -12,6 +12,7 @@ import cl.gerardomascayano.tdmadmin.domain.order.Order
 import cl.gerardomascayano.tdmadmin.data.remote.network.ApiConstants
 import cl.gerardomascayano.tdmadmin.data.remote.order.note.OrderNoteCreate
 import cl.gerardomascayano.tdmadmin.data.remote.order.note.OrderNoteMapper
+import cl.gerardomascayano.tdmadmin.domain.order.list.OrdersViewState
 import cl.gerardomascayano.tdmadmin.domain.order.note.OrderNoteState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -32,6 +33,14 @@ class OrdersRepositoryImpl @Inject constructor(
         ).flow.map { pagingDataNetwork ->
             pagingDataNetwork.map { orderResponse -> orderMapper.orderResponseToOrder(orderResponse) }
         }
+    }
+
+    override suspend fun getOrders(page: Int, filterText: String): OrdersViewState {
+        return remoteDataSource.getOrders(page, filterText)?.let {
+            if (it.isSuccessful) {
+                OrdersViewState.Success(orderMapper.ordersResponseToOrder(it.body()!!))
+            } else OrdersViewState.Error("Error en la carga de datos")
+        } ?: kotlin.run { OrdersViewState.Error("Ha ocurrido un error. Comprueba tu conexión y vuelve a intentar") }
     }
 
     override suspend fun updateOrder(orderId: Int, status: String): GenericState {
