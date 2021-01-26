@@ -21,6 +21,7 @@ import cl.gerardomascayano.tdmadmin.ui.orders.adapter.OrdersAdapter
 import cl.gerardomascayano.tdmadmin.ui.orders.adapter.OrdersLoadAdapter
 import cl.gerardomascayano.tdmadmin.ui.orders.detail.DetailOrderFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -78,6 +79,13 @@ class OrdersFragment : Fragment(), OrdersAdapter.ClickListener, ActivityFragment
             ordersViewModel.value.fetchOrders()
                 .collectLatest {
                     ordersAdapter.submitData(it)
+                }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            ordersViewModel.value.fetchOrderss()
+                .collect {
+
                 }
         }
     }

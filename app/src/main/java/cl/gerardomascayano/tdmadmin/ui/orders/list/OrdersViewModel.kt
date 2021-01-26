@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import cl.gerardomascayano.tdmadmin.domain.order.Order
 import cl.gerardomascayano.tdmadmin.domain.order.OrdersUseCase
+import cl.gerardomascayano.tdmadmin.domain.order.list.OrdersViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import timber.log.Timber
@@ -16,6 +17,7 @@ class OrdersViewModel @Inject constructor(private val useCase: OrdersUseCase) : 
 
     var orders: Flow<PagingData<Order>>? = null
     var currentFilterText: String = ""
+    var currentPage = 0
 
     fun fetchOrders(): Flow<PagingData<Order>> {
         if (orders == null) {
@@ -23,6 +25,11 @@ class OrdersViewModel @Inject constructor(private val useCase: OrdersUseCase) : 
                 .cachedIn(viewModelScope)
         }
         return orders!!
+    }
+
+    fun fetchOrderss() = flow<OrdersViewState> {
+        currentPage++
+        useCase.getOrders(currentPage, currentFilterText)
     }
 
     fun invalidateData() {
