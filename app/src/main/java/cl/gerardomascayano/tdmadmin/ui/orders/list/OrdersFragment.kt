@@ -17,14 +17,11 @@ import cl.gerardomascayano.tdmadmin.core.extension.visible
 import cl.gerardomascayano.tdmadmin.core.ui.*
 import cl.gerardomascayano.tdmadmin.databinding.FragmentOrdersBinding
 import cl.gerardomascayano.tdmadmin.domain.order.Order
-import cl.gerardomascayano.tdmadmin.ui.orders.adapter.OrdersAdapter
-import cl.gerardomascayano.tdmadmin.ui.orders.adapter.OrdersLoadAdapter
 import cl.gerardomascayano.tdmadmin.ui.orders.detail.DetailOrderFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 @AndroidEntryPoint
 class OrdersFragment : Fragment(), OrdersAdapter.ClickListener, ActivityFragmentContract {
