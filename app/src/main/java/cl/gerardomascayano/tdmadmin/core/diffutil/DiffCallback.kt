@@ -2,20 +2,18 @@ package cl.gerardomascayano.tdmadmin.core.diffutil
 
 import androidx.recyclerview.widget.DiffUtil
 
-class DiffCallback<T : DiffUtilComparator> {
+class DiffCallback<T : DiffUtilComparator>(private val oldList: List<T>, private val newList: List<T>) : DiffUtil.Callback() {
+    override fun getOldListSize(): Int = oldList.size
 
-    val itemCallback = object : DiffUtil.ItemCallback<T>() {
-        override fun areItemsTheSame(oldItem: T, newItem: T): Boolean {
-            return oldItem.getIdentifier() == newItem.getIdentifier()
-        }
+    override fun getNewListSize(): Int = newList.size
 
-        override fun areContentsTheSame(oldItem: T, newItem: T): Boolean {
-            return oldItem.getContent() == newItem.getContent()
-        }
-
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition].getIdentifier() == newList[newItemPosition].getIdentifier()
     }
 
-
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition] == newList[newItemPosition]
+    }
 
 
 }
