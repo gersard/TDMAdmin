@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import cl.gerardomascayano.tdmadmin.R
 import cl.gerardomascayano.tdmadmin.core.OnClickListener
+import cl.gerardomascayano.tdmadmin.core.diffutil.DiffCallback
 import cl.gerardomascayano.tdmadmin.core.extension.format
 import cl.gerardomascayano.tdmadmin.databinding.ItemOrderBinding
 import cl.gerardomascayano.tdmadmin.domain.order.Order
@@ -24,6 +26,13 @@ class OrderListAdapter(val clickListener: OnClickListener<Order>) : RecyclerView
     override fun onBindViewHolder(holder: OrderViewHolder, position: Int) = holder.setOrder(orderList[position])
 
     override fun getItemCount(): Int = orderList.size
+
+    fun submitOrders(orders: List<Order>) {
+        val diffCallback = DiffCallback(orderList, orders)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        orderList.addAll(orders)
+        diffResult.dispatchUpdatesTo(this)
+    }
 
     inner class OrderViewHolder(private val viewBinding: ItemOrderBinding) : RecyclerView.ViewHolder(viewBinding.root), View.OnClickListener {
 

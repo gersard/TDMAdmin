@@ -9,28 +9,35 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import cl.gerardomascayano.tdmadmin.MainActivity
 import cl.gerardomascayano.tdmadmin.R
+import cl.gerardomascayano.tdmadmin.core.OnClickListener
 import cl.gerardomascayano.tdmadmin.core.extension.invisible
 import cl.gerardomascayano.tdmadmin.core.extension.visible
 import cl.gerardomascayano.tdmadmin.core.ui.*
 import cl.gerardomascayano.tdmadmin.databinding.FragmentOrdersBinding
 import cl.gerardomascayano.tdmadmin.domain.order.Order
+import cl.gerardomascayano.tdmadmin.domain.order.list.OrdersViewState
 import cl.gerardomascayano.tdmadmin.ui.orders.detail.DetailOrderFragment
+import cl.gerardomascayano.tdmadmin.ui.orders.list.adapter.OrderListAdapter
+import cl.gerardomascayano.tdmadmin.ui.orders.list.adapter.OrderLoaderAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class OrdersFragment : Fragment(), OrdersAdapter.ClickListener, ActivityFragmentContract {
+class OrdersFragment : Fragment(), OnClickListener<Order>, ActivityFragmentContract {
 
     private val ordersViewModel = activityViewModels<OrdersViewModel>()
     private var _viewBinding: FragmentOrdersBinding? = null
     private val viewBinding: FragmentOrdersBinding
         get() = _viewBinding!!
-    private lateinit var ordersAdapter: OrdersAdapter
+    private lateinit var orderConcatAdapter: ConcatAdapter
+    private lateinit var orderListAdapter: OrderListAdapter
+    private lateinit var orderLoaderAdapter: OrderLoaderAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,7 +53,6 @@ class OrdersFragment : Fragment(), OrdersAdapter.ClickListener, ActivityFragment
         (requireActivity() as MainActivity).updateTitle("Órdenes")
         initAdapter()
         configureRv()
-        listeningOrdersState()
         fetchOrders()
         viewBinding.srlOrders.setOnRefreshListener {
             ordersViewModel.value.clearOrders()
@@ -54,35 +60,20 @@ class OrdersFragment : Fragment(), OrdersAdapter.ClickListener, ActivityFragment
         }
     }
 
-    private fun listeningOrdersState() {
-        ordersAdapter.addLoadStateListener { state ->
-            when (state.refresh) {
-                is LoadState.Loading -> viewBinding.srlOrders.post { viewBinding.srlOrders.isRefreshing = true }
-                is LoadState.NotLoading -> {
-                    viewBinding.srlOrders.isRefreshing = false
-                    if (state.refresh.endOfPaginationReached && ordersAdapter.itemCount < 1) emptyOrders()
-                }
-                is LoadState.Error -> {
-                    viewBinding.srlOrders.post { viewBinding.srlOrders.isRefreshing = false }
-                    Toast.makeText(requireContext(), "Ha ocurrido un error. Comprueba tu conexión y vuelve a intentar", Toast.LENGTH_LONG)
-                        .show()
-                }
-            }
-        }
-    }
 
     private fun fetchOrders() {
         viewLifecycleOwner.lifecycleScope.launch {
-            ordersViewModel.value.fetchOrders()
-                .collectLatest {
-                    ordersAdapter.submitData(it)
-                }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
             ordersViewModel.value.fetchOrderss()
                 .collect {
-
+                    when (it) {
+                        is OrdersViewState.Loading ->
+                            if (it.isLoading) orderConcatAdapter.addAdapter(orderLoaderAdapter)
+                            else orderConcatAdapter.removeAdapter(orderLoaderAdapter)
+                        is OrdersViewState.Error -> Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_LONG).show()
+                        is OrdersViewState.Success -> orderListAdapter.submitOrders(it.data)
+                        OrdersViewState.EndPageReached -> TODO()
+                        OrdersViewState.EmptyList -> emptyOrders()
+                    }
                 }
         }
     }
@@ -100,11 +91,14 @@ class OrdersFragment : Fragment(), OrdersAdapter.ClickListener, ActivityFragment
             )
         )
         viewBinding.rvOrders.layoutManager = LinearLayoutManager(requireContext())
-        viewBinding.rvOrders.adapter = ordersAdapter.withLoadStateFooter(OrdersLoadAdapter())
+
+        orderConcatAdapter = ConcatAdapter(orderListAdapter)
+        viewBinding.rvOrders.adapter = orderConcatAdapter
     }
 
     private fun initAdapter() {
-        ordersAdapter = OrdersAdapter(this)
+        orderListAdapter = OrderListAdapter(this)
+        orderLoaderAdapter = OrderLoaderAdapter()
     }
 
     fun filterOrders(text: String) {
@@ -113,9 +107,11 @@ class OrdersFragment : Fragment(), OrdersAdapter.ClickListener, ActivityFragment
         fetchOrders()
     }
 
-    override fun onOrderClickListener(order: Order) {
-        (activity as? MainActivity)?.replaceFragment(DetailOrderFragment.newInstance(order), true, AnimationType.SLIDE)
+
+    override fun onClickListener(item: Order) {
+        (activity as? MainActivity)?.replaceFragment(DetailOrderFragment.newInstance(item), true, AnimationType.SLIDE)
     }
+
 
     override fun iconLeftToShow(): IconLeftTypeActivity = IconLeftTypeActivity.HAMBURGUER
     override fun iconRightToShow(): IconRightTypeActivity = IconRightTypeActivity.SEARCH
