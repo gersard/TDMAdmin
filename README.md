@@ -5,3 +5,31 @@ Aplicación móvil desarrollada para simplificar manejo de información relacion
 </p>
 </br>
 
+![](vistas.png)
+
+## Stack
+
+- Language
+  - Kotlin
+  - XML
+- JetPack
+  - LiveData
+  - Lifecycle
+  - ViewModel
+- Dependency Injector
+  - Dagger Hilt
+- Network
+  - [Retrofit](https://github.com/square/retrofit)
+  - [OkHTTP](https://github.com/square/okhttp)
+- JSON Parses
+  - GSON
+- UI
+  - Material Components
+- Firebase
+  - Messaging
+  - Analytics
+  - Crashlytics
+- Logging
+  - Timber
+- Paging
+  - Paging 3
