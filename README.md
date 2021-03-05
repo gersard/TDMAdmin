@@ -7,7 +7,7 @@ Aplicación móvil desarrollada para simplificar manejo de información relacion
 
 ![](vistas.png)
 
-## Stack
+## Tech Stack
 
 - Language
   - [Kotlin](https://developer.android.com/kotlin)
