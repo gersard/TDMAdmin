@@ -34,3 +34,6 @@ Aplicación móvil desarrollada para simplificar manejo de información relacion
   - [Timber](https://github.com/JakeWharton/timber)
 - Paging
   - [Paging 3](https://developer.android.com/topic/libraries/architecture/paging/v3-overview)
+
+## TODO
+- Improve design :disappointed:
